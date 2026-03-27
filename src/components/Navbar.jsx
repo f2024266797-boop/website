@@ -125,19 +125,7 @@ export default function Navbar() {
       </div>
 
       {/* 📱 MOBILE NAVIGATION DRAWER (Slide-in) */}
-      <div style={{
-        position: 'fixed', top: 0, right: 0, bottom: 0, width: '280px',
-        background: '#ffffff !important', 
-        backgroundColor: '#ffffff',
-        zIndex: 99999999, padding: '100px 40px',
-        transform: mobileOpen ? 'translateX(0) translateZ(10001px)' : 'translateX(100%) translateZ(10001px)',
-        visibility: mobileOpen ? 'visible' : 'hidden',
-        pointerEvents: mobileOpen ? 'auto' : 'none',
-        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-        boxShadow: '-20px 0 60px rgba(0,0,0,0.15)',
-        backdropFilter: 'none',
-        WebkitBackdropFilter: 'none'
-      }}>
+      <div className={`mobile-drawer ${mobileOpen ? 'open' : ''}`}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           {navLinks.map(l => (
             <a 
@@ -156,18 +144,46 @@ export default function Navbar() {
       {/* Overlay */}
       <div 
          onClick={() => setMenuOpen(false)} 
-         style={{ 
-            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', 
-            zIndex: 10000, backdropFilter: 'blur(5px)',
-            opacity: mobileOpen ? 1 : 0,
-            pointerEvents: mobileOpen ? 'auto' : 'none',
-            transform: 'translateZ(10000px)',
-            WebkitTransform: 'translateZ(10000px)',
-            transition: '0.4s ease'
-         }} 
+         className={`drawer-overlay ${mobileOpen ? 'open' : ''}`}
       />
 
       <style>{`
+        .mobile-drawer {
+          position: fixed !important;
+          top: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          width: 280px !important;
+          background: #ffffff !important;
+          background-color: #ffffff !important;
+          z-index: 9999999 !important;
+          padding: 100px 40px !important;
+          transform: translateX(100%) translateZ(1000px) !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+          box-shadow: -20px 0 60px rgba(0,0,0,0.15) !important;
+          opacity: 1 !important;
+        }
+        .mobile-drawer.open {
+          transform: translateX(0) translateZ(1000px) !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+        }
+        .drawer-overlay {
+          position: fixed !important;
+          inset: 0 !important;
+          background: rgba(0,0,0,0.5) !important;
+          z-index: 9999998 !important;
+          backdrop-filter: blur(5px) !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          transition: 0.4s ease !important;
+        }
+        .drawer-overlay.open {
+          opacity: 1 !important;
+          pointer-events: auto !important;
+        }
         @media (max-width: 1100px) {
           .desktop-links { display: none !important; }
           .mobile-btn { display: flex !important; }

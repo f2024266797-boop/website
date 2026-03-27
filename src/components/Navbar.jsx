@@ -127,12 +127,16 @@ export default function Navbar() {
       {/* 📱 MOBILE NAVIGATION DRAWER (Slide-in) */}
       <div style={{
         position: 'fixed', top: 0, right: 0, bottom: 0, width: '280px',
-        background: '#fff', zIndex: 10001, padding: '100px 40px',
+        background: '#ffffff !important', 
+        backgroundColor: '#ffffff',
+        zIndex: 99999999, padding: '100px 40px',
         transform: mobileOpen ? 'translateX(0) translateZ(10001px)' : 'translateX(100%) translateZ(10001px)',
         visibility: mobileOpen ? 'visible' : 'hidden',
         pointerEvents: mobileOpen ? 'auto' : 'none',
         transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-        boxShadow: '-10px 0 50px rgba(0,0,0,0.1)'
+        boxShadow: '-20px 0 60px rgba(0,0,0,0.15)',
+        backdropFilter: 'none',
+        WebkitBackdropFilter: 'none'
       }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           {navLinks.map(l => (

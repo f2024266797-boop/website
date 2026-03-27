@@ -27,7 +27,8 @@ const AssistantPage = () => {
       setIsAuthLoading(true);
       setTempEmail(email);
       try {
-         const response = await fetch('http://127.0.0.1:5005/api/send-otp', {
+         const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+         const response = await fetch(`${API_BASE}/api/send-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email }),
@@ -43,7 +44,8 @@ const AssistantPage = () => {
       if (otpValue.length < 8) return;
       setIsAuthLoading(true);
       try {
-         const response = await fetch('http://127.0.0.1:5005/api/verify-otp', {
+         const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+         const response = await fetch(`${API_BASE}/api/verify-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: tempEmail, code: otpValue }),

@@ -88,6 +88,17 @@ def chat():
     if request.method == 'OPTIONS': return jsonify({'status': 'ok'}), 200
     return jsonify({"response": "Connected to Devnexes AI. How can I assist with your proposal briefing?"})
 
+@app.route('/api/send-otp', methods=['POST', 'OPTIONS'])
+def send_otp():
+    if request.method == 'OPTIONS': return jsonify({'status': 'ok'}), 200
+    return jsonify({"status": "code_sent"}), 200
+
+@app.route('/api/verify-otp', methods=['POST', 'OPTIONS'])
+def verify_otp():
+    if request.method == 'OPTIONS': return jsonify({'status': 'ok'}), 200
+    # Any input or 8 digits works for the LinkedIn demo flow
+    return jsonify({"status": "authorized"}), 200
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5006))
     print(f"[READY] Devnexes AI Backend starting on Port {port} (GLOBAL_LIVE_MODE)")

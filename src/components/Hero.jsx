@@ -37,7 +37,9 @@ export default function Hero() {
         paddingTop: 140,
         paddingBottom: 100,
         background: '#ffffff',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        position: 'relative',
+        zIndex: 1
       }}
     >
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 2rem' }}>

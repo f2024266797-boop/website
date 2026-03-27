@@ -34,6 +34,7 @@ export default function Navbar() {
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 999999,
         background: 'rgba(255, 255, 255, 0.65)',
         backdropFilter: 'saturate(180%) blur(20px)',
+        isolation: 'isolate',
         WebkitBackdropFilter: 'saturate(180%) blur(20px)', 
         borderBottom: scrolled ? '1px solid rgba(168, 85, 247, 0.08)' : '1px solid transparent',
         boxShadow: scrolled ? '0 4px 25px rgba(0, 0, 0, 0.04)' : 'none',

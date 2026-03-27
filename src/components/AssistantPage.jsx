@@ -27,7 +27,8 @@ const AssistantPage = () => {
       setIsAuthLoading(true);
       setTempEmail(email);
       try {
-         const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+         let API_BASE = import.meta.env.VITE_API_URL || 'https://devnexes.onrender.com';
+         API_BASE = API_BASE.replace(/\/$/, '');
          const response = await fetch(`${API_BASE}/api/send-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -44,7 +45,8 @@ const AssistantPage = () => {
       if (otpValue.length < 8) return;
       setIsAuthLoading(true);
       try {
-         const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+         let API_BASE = import.meta.env.VITE_API_URL || 'https://devnexes.onrender.com';
+         API_BASE = API_BASE.replace(/\/$/, '');
          const response = await fetch(`${API_BASE}/api/verify-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -78,7 +80,11 @@ const AssistantPage = () => {
       setMessages(p => [...p, { role: 'user', text: val }]);
       setInputValue('');
       setIsTyping(true);
-      const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+      
+      // Force fallback if Render Env Var is missing in build cache
+      let API_BASE = import.meta.env.VITE_API_URL || 'https://devnexes.onrender.com';
+      API_BASE = API_BASE.replace(/\/$/, '');
+
       try {
          const response = await fetch(`${API_BASE}/api/chat`, {
             method: 'POST',

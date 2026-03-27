@@ -104,23 +104,34 @@ export default function Navbar() {
             </button>
           </div>
 
-          <button onClick={() => setMenuOpen(!mobileOpen)} className="mobile-btn" style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', flexDirection: 'column', gap: 6 }}>
-            {[1,2,3].map(i => <div key={i} style={{ width: 26, height: 2.2, background: '#1a1a2e', borderRadius: 2 }} />)}
+          <button 
+             onClick={() => setMenuOpen(!mobileOpen)} 
+             className="mobile-btn" 
+             style={{ 
+               display: 'none', background: 'none', border: 'none', cursor: 'pointer', 
+               padding: '10px', marginLeft: 'auto', zIndex: 11000, 
+               position: 'relative', width: '44px', height: '44px', alignItems: 'center', justifyContent: 'center' 
+             }}
+          >
+            {mobileOpen ? (
+               <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1a1a2e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            ) : (
+               <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1a1a2e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            )}
           </button>
         </nav>
-
       </div>
 
       {/* 📱 MOBILE NAVIGATION DRAWER (Slide-in) */}
       <div style={{
         position: 'fixed', top: 0, right: 0, bottom: 0, width: '280px',
-        background: '#fff', zIndex: 10001, padding: '80px 40px',
+        background: '#fff', zIndex: 10001, padding: '100px 40px',
         transform: mobileOpen ? 'translateX(0)' : 'translateX(100%)',
         visibility: mobileOpen ? 'visible' : 'hidden',
+        pointerEvents: mobileOpen ? 'auto' : 'none',
         transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
         boxShadow: '-10px 0 50px rgba(0,0,0,0.1)'
       }}>
-        <button onClick={() => setMenuOpen(false)} style={{ position: 'absolute', top: 25, right: 25, background: 'none', border: 'none', fontSize: '2rem', cursor: 'pointer', color: '#1a1a2e' }}>×</button>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           {navLinks.map(l => (
             <a 
@@ -137,12 +148,21 @@ export default function Navbar() {
       </div>
 
       {/* Overlay */}
-      {mobileOpen && <div onClick={() => setMenuOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.2)', zIndex: 10000, backdropFilter: 'blur(5px)' }} />}
+      <div 
+         onClick={() => setMenuOpen(false)} 
+         style={{ 
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', 
+            zIndex: 10000, backdropFilter: 'blur(5px)',
+            opacity: mobileOpen ? 1 : 0,
+            pointerEvents: mobileOpen ? 'auto' : 'none',
+            transition: '0.4s ease'
+         }} 
+      />
 
       <style>{`
         @media (max-width: 1100px) {
           .desktop-links { display: none !important; }
-          .mobile-btn { display: flex !important; z-index: 10002; }
+          .mobile-btn { display: flex !important; }
         }
         @media (max-width: 480px) {
           .logo-font { font-size: 1.5rem !important; }

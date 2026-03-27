@@ -35,6 +35,8 @@ export default function Navbar() {
         background: 'rgba(255, 255, 255, 0.65)',
         backdropFilter: 'saturate(180%) blur(20px)',
         isolation: 'isolate',
+        transform: 'translateZ(9999px)',
+        WebkitTransform: 'translateZ(9999px)', // Safari support
         WebkitBackdropFilter: 'saturate(180%) blur(20px)', 
         borderBottom: scrolled ? '1px solid rgba(168, 85, 247, 0.08)' : '1px solid transparent',
         boxShadow: scrolled ? '0 4px 25px rgba(0, 0, 0, 0.04)' : 'none',
@@ -126,7 +128,7 @@ export default function Navbar() {
       <div style={{
         position: 'fixed', top: 0, right: 0, bottom: 0, width: '280px',
         background: '#fff', zIndex: 10001, padding: '100px 40px',
-        transform: mobileOpen ? 'translateX(0)' : 'translateX(100%)',
+        transform: mobileOpen ? 'translateX(0) translateZ(10001px)' : 'translateX(100%) translateZ(10001px)',
         visibility: mobileOpen ? 'visible' : 'hidden',
         pointerEvents: mobileOpen ? 'auto' : 'none',
         transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -155,6 +157,8 @@ export default function Navbar() {
             zIndex: 10000, backdropFilter: 'blur(5px)',
             opacity: mobileOpen ? 1 : 0,
             pointerEvents: mobileOpen ? 'auto' : 'none',
+            transform: 'translateZ(10000px)',
+            WebkitTransform: 'translateZ(10000px)',
             transition: '0.4s ease'
          }} 
       />

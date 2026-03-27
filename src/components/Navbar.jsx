@@ -141,7 +141,7 @@ export default function Navbar() {
       <style>{`
         @media (max-width: 1100px) {
           .desktop-links { display: none !important; }
-          .mobile-btn { display: flex !important; }
+          .mobile-btn { display: flex !important; z-index: 10002; }
         }
         @media (max-width: 480px) {
           .logo-font { font-size: 1.5rem !important; }

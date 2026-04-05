@@ -74,33 +74,69 @@ export default function TrustAndPeople() {
         </div>
       </div>
 
-      {/* ── PART 3: Exact Client Logos Strip ── */}
-      <div style={{ position: 'relative', width: '100%', background: '#f8f8fa', padding: '5rem 0', display: 'flex', alignItems: 'center', borderBottom: '1.5px solid #ececf4' }}>
-        
-        <div style={{ maxWidth: 1300, margin: '0 auto', width: '100%', padding: '0 2rem', display: 'flex', flexWrap: 'wrap', gap: isMobile ? '4rem' : '1rem', justifyContent: isMobile ? 'center' : 'space-between', alignItems: 'center' }}>
-           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <div style={{ fontWeight: 900, fontSize: '1.4rem', color: '#000', lineHeight: 1 }}>SAMPATH</div>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#000', letterSpacing: '0.5px' }}>CREAM HOUSE</div>
-           </div>
-           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <div style={{ width: 28, height: 28, background: 'linear-gradient(45deg, #00c6ff, #0072ff)', clipPath: 'polygon(20% 0%, 0% 100%, 100% 100%)', borderRadius: 2 }} />
-              <div style={{ fontWeight: 800, fontSize: '1.7rem', color: '#1a1a2e' }}>AdClipse</div>
-           </div>
-           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <div style={{ fontWeight: 700, fontSize: '2.1rem', color: '#0d47a1', letterSpacing: '-0.5px' }}>PJC</div>
-              <div style={{ width: '1.5px', height: 45, background: '#a0a0b0' }} />
-              <div style={{ fontSize: '0.7rem', fontWeight: 600, color: '#666', lineHeight: 1.3 }}>Practical Japanese<br/>Communication</div>
-           </div>
-           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <div style={{ fontSize: '1.8rem', opacity: 0.9 }}>🛍️</div>
-              <div style={{ fontWeight: 700, fontSize: '1.6rem', color: '#008080' }}>ClickOrder</div>
-           </div>
-           <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem' }}>
-              <div style={{ width: 28, height: 28, background: 'linear-gradient(135deg, #fce, #f09, #33f)', borderRadius: '6px' }} />
-              <div style={{ fontWeight: 700, fontSize: '1.7rem', color: '#4a4a68' }}>TechMate</div>
-           </div>
+      {/* ── PART 2b: Team Member Cards ── */}
+      <div style={{ maxWidth: 1300, margin: '0 auto', padding: '0 2rem 5rem 2rem' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(5, 1fr)',
+          gap: isMobile ? '2.5rem' : '1.5rem',
+          justifyItems: 'center',
+        }}>
+
+          {/* Slot 1 — Empty */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ width: 110, height: 110, borderRadius: '50%', border: '2.5px dashed #d1d5db', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f9fafb' }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" strokeWidth="2" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <p style={{ fontWeight: 700, color: '#d1d5db', fontSize: '0.9rem', margin: 0 }}>Seat Free</p>
+            <p style={{ fontSize: '0.75rem', color: '#e5e7eb', margin: 0 }}>Coming Soon</p>
+          </div>
+
+          {/* Slot 2 — Muhammad Arham */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ width: 110, height: 110, borderRadius: '50%', overflow: 'hidden', border: '3px solid #e9d5ff', boxShadow: '0 8px 24px rgba(168,85,247,0.15)' }}>
+              <img src="/assets/arham.jpeg" alt="Muhammad Arham" style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={e => { e.target.style.display='none'; e.target.parentNode.innerHTML=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#a855f7,#4f46e5);font-size:1.5rem;font-weight:800;color:#fff;border-radius:50%">MA</div>`; }} />
+            </div>
+            <p style={{ fontWeight: 700, color: '#1a1a2e', fontSize: '0.9rem', margin: 0, textAlign: 'center' }}>Muhammad Arham</p>
+            <p style={{ fontSize: '0.75rem', color: '#7c3aed', fontWeight: 600, margin: 0 }}>COO</p>
+          </div>
+
+          {/* Slot 3 — Founder (Featured Center) */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ width: 124, height: 124, borderRadius: '50%', padding: '3px', background: 'linear-gradient(135deg,#ff7eb3,#3d1fc2)', boxShadow: '0 10px 30px rgba(168,85,247,0.3)' }}>
+              <div style={{ width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden', background: '#fff' }}>
+                <img src="/assets/founder.jpg" alt="Founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  onError={e => { e.target.src='https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&q=80&w=200'; }} />
+              </div>
+            </div>
+            <p style={{ fontWeight: 800, color: '#1a1a2e', fontSize: '0.95rem', margin: 0, textAlign: 'center' }}>Muhammad Raham</p>
+            <p style={{ fontSize: '0.75rem', color: '#7c3aed', fontWeight: 600, margin: 0 }}>CEO & Founder</p>
+          </div>
+
+          {/* Slot 4 — Muhammad Huzaifa */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ width: 110, height: 110, borderRadius: '50%', overflow: 'hidden', border: '3px solid #e9d5ff', boxShadow: '0 8px 24px rgba(168,85,247,0.15)' }}>
+              <img src="/assets/huzaifa.jpeg" alt="Muhammad Huzaifa" style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={e => { e.target.style.display='none'; e.target.parentNode.innerHTML=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#a855f7,#4f46e5);font-size:1.5rem;font-weight:800;color:#fff;border-radius:50%">MH</div>`; }} />
+            </div>
+            <p style={{ fontWeight: 700, color: '#1a1a2e', fontSize: '0.9rem', margin: 0, textAlign: 'center' }}>Muhammad Huzaifa</p>
+            <p style={{ fontSize: '0.75rem', color: '#7c3aed', fontWeight: 600, margin: 0 }}>CTO</p>
+          </div>
+
+          {/* Slot 5 — Huzaifa Mushtaq */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ width: 110, height: 110, borderRadius: '50%', overflow: 'hidden', border: '3px solid #e9d5ff', boxShadow: '0 8px 24px rgba(168,85,247,0.15)' }}>
+              <img src="/assets/huzaifa_mushtaq.jpeg" alt="Huzaifa Mushtaq" style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(2.0)', objectPosition: 'center 20%' }}
+                onError={e => { e.target.style.display='none'; e.target.parentNode.innerHTML=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#a855f7,#4f46e5);font-size:1.5rem;font-weight:800;color:#fff;border-radius:50%">HM</div>`; }} />
+            </div>
+            <p style={{ fontWeight: 700, color: '#1a1a2e', fontSize: '0.9rem', margin: 0, textAlign: 'center' }}>Huzaifa Mushtaq</p>
+            <p style={{ fontSize: '0.75rem', color: '#7c3aed', fontWeight: 600, margin: 0 }}>Team Lead</p>
+          </div>
+
         </div>
       </div>
+
 
     </section>
   )

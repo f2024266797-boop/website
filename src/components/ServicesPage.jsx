@@ -1,390 +1,354 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from './Navbar'
+import React, { useEffect, useState, useRef } from 'react'
 import Footer from './Footer'
-
 
 const serviceList = [
    {
       id: 1,
-      title: 'Mobile App Development',
-      desc: 'Developing high-performance, native-feel applications for iOS and Android with seamless UX.',
-      fullDesc: 'We specialize in mission-critical mobile engineering. From real-time data synchronization to custom native modules, our mobile strategy ensures your product dominates the App Store and Google Play with zero-lag performance.',
-      stack: ['Swift', 'Kotlin', 'Flutter', 'Firebase', 'GraphQL'],
-      process: ['User Journey Mapping', 'Hi-Fi Prototyping', 'Native Development', 'Performance Auditing']
+      title: 'Mobile Architecture',
+      desc: 'Developing high-performance, native-feel applications for iOS and Android reaching peak UX benchmarks.',
+      summary: 'Architecting mission-critical mobility protocols. We deploy specialized native kernels and hybrid sharding engines to ensure absolute cross-platform state synchronization and sub-150ms interaction latency.',
+      specs: [
+         { label: 'Latency Protocol', value: 'L2 Real-time' },
+         { label: 'Sync Engine', value: 'Bilateral State' },
+         { label: 'Encryption', value: 'End-to-End L5' },
+         { label: 'Runtime Depth', value: 'Native Core' }
+      ],
+      roadmap: [
+         { phase: 'PHASE 01', step: 'User Flow Architectural Mapping' },
+         { phase: 'PHASE 02', step: 'Kernel-Level Native Execution' },
+         { phase: 'PHASE 03', step: 'Distributed State Syncing' },
+         { phase: 'PHASE 04', step: 'Global Deployment & Security Audit' }
+      ],
+      stack: ['Swift', 'Kotlin', 'Flutter', 'Firebase', 'GraphQL', 'SwiftUI', 'Jetpack'],
+      icon: '🧠'
    },
    {
       id: 2,
-      title: 'Software Development',
+      title: 'Cloud Orchestration',
       desc: 'Building robust, scalable desktop and system-level software tailored for business growth.',
-      fullDesc: 'Our software engineering vertical focuses on building the backbone of enterprise operations. We develop distributed systems, microservices architectures, and desktop solutions that integrate seamlessly with your legacy assets.',
-      stack: ['Rust', 'Go', 'C++', 'Docker', 'Kubernetes'],
-      process: ['Architecture Design', 'Core Logic Dev', 'Module Integration', 'Stress Testing']
+      summary: 'Deploying decentralized global node meshes. Our focus is on zero-point failure resilience and massive horizontal scaling using industrial-grade container orchestration and message brokering.',
+      specs: [
+         { label: 'Distributed Load', value: 'Unlimited' },
+         { label: 'Fail-Safe', value: '99.999% Ready' },
+         { label: 'Compute Level', value: 'Edge-Global' },
+         { label: 'Node Meshing', value: 'L4 Internal' }
+      ],
+      roadmap: [
+         { phase: 'PHASE 01', step: 'Infrastructure Mesh Analysis' },
+         { phase: 'PHASE 02', step: 'Cluster & Container Deployment' },
+         { phase: 'PHASE 03', step: 'Real-time Redundancy Testing' },
+         { phase: 'PHASE 04', step: 'Global Scaling Protocol Release' }
+      ],
+      stack: ['Rust', 'Go', 'Docker', 'Kubernetes', 'Aria2-Core', 'Terraform', 'Vault'],
+      icon: '⚙️'
    },
    {
       id: 3,
-      title: 'Web App Development',
+      title: 'Hyper Platforms',
       desc: 'Crafting responsive, secure, and fast web platforms using modern architectural standards.',
-      fullDesc: 'Next-generation web applications require more than just a UI. We build high-frame, SSR-optimized, and secure web platforms that handle millions of users with absolute precision and sub-second load times.',
-      stack: ['Next.js', 'React', 'Node.js', 'PostgreSQL', 'Redis'],
-      process: ['Component Architecture', 'API Engineering', 'UX Optimization', 'Security Hardening']
+      summary: 'Next-generation enterprise ecosystems engineered for extreme speed. Utilizing Edge-computed SSR and sharded payload delivery to handle peak global concurrency with zero latency drift.',
+      specs: [
+         { label: 'Payload Delta', value: 'Minimized' },
+         { label: 'Edge Latency', value: '<40ms' },
+         { label: 'Vulnerability', value: 'Zero-Grade' },
+         { label: 'CDN Matrix', value: 'Multi-Region' }
+      ],
+      roadmap: [
+         { phase: 'PHASE 01', step: 'Logic Core Mapping' },
+         { phase: 'PHASE 02', step: 'SSR Layering Execution' },
+         { phase: 'PHASE 03', step: 'Edge-CDN Sharding' },
+         { phase: 'PHASE 04', step: 'Production Stress Hardening' }
+      ],
+      stack: ['Next.js', 'React', 'Node.js', 'PostgreSQL', 'Redis', 'TypeScript', 'Prisma'],
+      icon: '🌐'
    },
    {
       id: 4,
-      title: 'AI Models',
+      title: 'Neural AI RAG-Ops',
       desc: 'Engineering custom RAG-based LLMs and predictive models to automate complex decision-making.',
-      fullDesc: 'We bridge the gap between research and production AI. Our team specializes in Retrieval-Augmented Generation (RAG), fine-tuning large language models, and building predictive pipelines that turn data into decision-making gold.',
-      stack: ['PyTorch', 'TensorFlow', 'Pinecone', 'LangChain', 'OpenAI'],
-      process: ['Data Ingestion', 'Model Tuning', 'Vector Embedding', 'Deployment & Monitoring']
+      summary: 'Translating research-grade neural intelligence into production environments. We specialize in RAG-Ops and vector state machines that deliver objective decision logic at millisecond inference speeds.',
+      specs: [
+         { label: 'Inference Speed', value: 'Turbo' },
+         { label: 'Context Density', value: 'High' },
+         { label: 'Bias Guardrails', value: 'Strict L1' },
+         { label: 'Model Weight', value: 'Quantized' }
+      ],
+      roadmap: [
+         { phase: 'PHASE 01', step: 'Vector Embedding Strategy' },
+         { phase: 'PHASE 02', step: 'Database RAG Hub Integration' },
+         { phase: 'PHASE 03', step: 'LLM Fine-Tuning Execution' },
+         { phase: 'PHASE 04', step: 'Neural Production Deployment' }
+      ],
+      stack: ['PyTorch', 'Pinecone', 'LangChain', 'OpenAI', 'Llama-3', 'HuggingFace'],
+      icon: '🧬'
    },
    {
       id: 5,
-      title: 'Software Testing',
+      title: 'Logic Tech Audit',
       desc: 'Rigorous QA and automated testing protocols ensuring your products are bug-free and efficient.',
-      fullDesc: 'Quality is not an afterthought; it is our foundation. We implement end-to-end automated testing pipelines, security penetration testing, and load-balancing simulations to ensure your software never fails under pressure.',
-      stack: ['Cypress', 'Playwright', 'Jest', 'Selenium', 'JMeter'],
-      process: ['Test Case Planning', 'Automation Scripting', 'Regression Cycles', 'Final Audit']
+      summary: 'Comprehensive quality engineering protocols designed to eliminate technical debt. We conduct L5-level stress testing and code architecture audits to secure your digital assets.',
+      specs: [
+         { label: 'Audit Depth', value: 'L5 Full' },
+         { label: 'Core Coverage', value: '100% Sync' },
+         { label: 'Debt reduction', value: 'Target 0' },
+         { label: 'Regression Rate', value: 'Minimized' }
+      ],
+      roadmap: [
+         { phase: 'PHASE 01', step: 'Systemic Architecture Review' },
+         { phase: 'PHASE 02', step: 'Automated CI/CD Sync' },
+         { phase: 'PHASE 03', step: 'Heavy Load Stress Testing' },
+         { phase: 'PHASE 04', step: 'Final Verification Report' }
+      ],
+      stack: ['Cypress', 'Playwright', 'Jest', 'Selenium', 'JMeter', 'Vitest'],
+      icon: '🎯'
    },
    {
       id: 6,
-      title: 'AI Integration',
+      title: 'Agent Orchestration',
       desc: 'Seamlessly embedding intelligent AI agents into existing ecosystems for enhanced productivity.',
-      fullDesc: 'Bring the power of AI to your existing tools. We integrate intelligent agents, neural pipelines, and automated reasoning engines into your current business ecosystem to eliminate manual overhead and boost ROI.',
-      stack: ['API Hooks', 'Model Hosting', 'Logic Orchestration', 'Data Privacy Tools'],
-      process: ['Ecosystem Audit', 'Pipeline Design', 'Secure Integration', 'Output Validation']
+      summary: 'Automating high-impact business workflows through intelligent reasoning layers. Our orchestration mesh enables autonomous agents to interact natively with your existing software stack.',
+      specs: [
+         { label: 'Autonomy Level', value: 'Supervised' },
+         { label: 'Workflow ROI', value: '+500%' },
+         { label: 'Reasoning Engine', value: 'Vivid' },
+         { label: 'Interaction API', value: 'Direct' }
+      ],
+      roadmap: [
+         { phase: 'PHASE 01', step: 'Workflow Logic Audit' },
+         { phase: 'PHASE 02', step: 'Reasoning Agent Design' },
+         { phase: 'PHASE 03', step: 'Systemic Integration Mesh' },
+         { phase: 'PHASE 04', step: 'Autonomous Loop Validation' }
+      ],
+      stack: ['API Hooks', 'Model Hosting', 'Workflow Logic Hub', 'Python', 'FastAPI'],
+      icon: '🤖'
    }
 ]
 
 export default function ServicesPage() {
-   const primaryNavy = '#1a1a2e'
+   const primaryNavy = '#0f172a'
+   const d_purp = '#3d1fc2'
    const brandMagenta = '#ff7eb3'
-   const purpleGradient = 'linear-gradient(135deg, #ff7eb3 0%, #3d1fc2 100%)'
+   const d_grad = 'linear-gradient(135deg, #ff7eb3 0%, #3d1fc2 100%)'
+   const themeBorder = 'rgba(61,31,194,0.12)'
 
-   const [scrollY, setScrollY] = useState(0)
    const [selectedService, setSelectedService] = useState(null)
+   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+   const containerRef = useRef(null)
 
+   // 🛑 NUCLEAR SCROLL JAIL 🛑
    useEffect(() => {
-      window.scrollTo(0, 0)
-      document.body.style.backgroundColor = '#ffffff'
-
-      const handleScroll = () => {
-         setScrollY(window.scrollY)
+      if (selectedService) {
+         document.body.style.overflow = 'hidden'
+         document.documentElement.style.overflow = 'hidden'
+      } else {
+         document.body.style.overflow = ''
+         document.documentElement.style.overflow = ''
       }
-      window.addEventListener('scroll', handleScroll, { passive: true })
-      return () => window.removeEventListener('scroll', handleScroll)
-   }, [])
+      return () => { 
+         document.body.style.overflow = ''
+         document.documentElement.style.overflow = ''
+      }
+   }, [selectedService])
 
-   const handleBack = () => {
-      setSelectedService(null)
-      window.scrollTo({ top: 400, behavior: 'instant' })
+   const handleMouseMove = (e) => {
+      if (!containerRef.current) return
+      const rect = containerRef.current.getBoundingClientRect()
+      const x = (e.clientX - rect.left) / rect.width - 0.5
+      const y = (e.clientY - rect.top) / rect.height - 0.5
+      setMousePos({ x, y })
    }
 
    return (
-      <div className="themed-services-page">
-         <Navbar />
+      <div style={{ background: '#ffffff', minHeight: '100vh', color: '#0f172a', fontFamily: "'Outfit', sans-serif" }}>
+         
 
-         <main style={{ paddingTop: '140px', paddingBottom: '160px', position: 'relative' }}>
 
-            <div className="container" style={{ maxWidth: 1250, margin: '0 auto', padding: '0 25px', position: 'relative', zIndex: 10 }}>
+         <main style={{ paddingTop: '100px', paddingBottom: '160px', position: 'relative', zIndex: 1, overflow: 'hidden', width: '100%' }}>
+            <div style={{ maxWidth: '1420px', margin: '0 auto', padding: '0 40px', position: 'relative' }}>
+               
+               {/* 🌈 DESKTOP HERO MASTERPIECE (RESTORED V36/V38) 🌈 */}
+               <div className="v41-hero-flex" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '140px', position: 'relative' }}>
+                  <div className="v41-hero-text" style={{ textAlign: 'left', position: 'relative', zIndex: 10 }}>
+                     <span style={{ fontSize: '0.76rem', fontWeight: 1000, color: '#94a3b8', letterSpacing: '6px', marginBottom: '30px', display: 'block' }}>STRATEGIC CAPABILITIES 01</span>
+                     <h1 className="v41-hero-h1">
+                        <span className="building-text-v41">Building</span> Digital <br />
+                        <span style={{ background: d_grad, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Success.</span>
+                     </h1>
+                     <p className="v41-hero-para" style={{ maxWidth: '500px' }}>
+                        Transforming technical complexity into mission-critical engineering solutions
+                        built for industrial-scale production.
+                     </p>
+                  </div>
 
-               {/* 🏷️ MAIN SITE SYNCED HERO */}
-               {!selectedService && (
-                  <div className="dec-hero hero-grid animate-fade-up">
-                     <div className="hero-info" style={{ transform: `translateY(${scrollY * 0.15}px)` }}>
-                        <span className="dec-badge">STRATEGIC_CAPABILITIES_01</span>
-                        <h1 className="hero-h1">
-                           <span className="thin-txt">Building</span> Digital <br />
-                           <span className="grad-bold">Success.</span>
-                        </h1>
-                        <p className="hero-p-txt">
-                           Transforming technical complexity into mission-critical engineering solutions
-                           built for industrial-scale production.
-                        </p>
+                  {/* RESTORED V29 ANIMATION STACK */}
+                  <div ref={containerRef} onMouseMove={handleMouseMove} onMouseLeave={() => setMousePos({ x: 0, y: 0 })} className="v41-responsive-stack" style={{ position: 'absolute', top: '10px', right: '160px', width: '380px', height: '420px', zIndex: 0 }}>
+                     <div className="v41-ambient-fog" />
+                     
+                     <div className="v41-module v41-mod-1" style={{ top: '40px', right: '0px', width: '190px', border: `1.2px solid ${d_purp}22`, zIndex: 3, transform: `rotate(-4deg) translate(${mousePos.x * 25}px, ${mousePos.y * 25}px)` }}>
+                        <div style={{ display: 'flex', gap: '5px', marginBottom: '10px' }}><div className="v11-dot dot-r" /><div className="v11-dot dot-y" /><div className="v11-dot dot-g" /></div>
+                        <span style={{ fontSize: '0.55rem', fontWeight: 1000, color: d_purp, letterSpacing: '2px', display: 'block', marginBottom: '8px' }}>CORE KERNEL rs</span>
+                        <div style={{ fontSize: '0.65rem', fontWeight: 600, color: '#64748b', lineHeight: 1.6, fontFamily: 'monospace' }}>fn sync_engine() {'{'}<br />&nbsp;&nbsp;exec:para(14)<br />&nbsp;&nbsp;cache:clear()<br />{'}'}</div>
                      </div>
 
-                     <div className="hero-box" style={{ transform: `translateY(${scrollY * -0.1}px)` }}>
-                         <div className="neural-viz">
-                           <svg viewBox="0 0 400 400" className="neural-svg">
-                             <line x1="200" y1="200" x2="80" y2="80" className="n-line" />
-                             <line x1="200" y1="200" x2="320" y2="80" className="n-line" />
-                             <line x1="200" y1="200" x2="320" y2="320" className="n-line" />
-                             <line x1="200" y1="200" x2="80" y2="320" className="n-line" />
-                             <line x1="200" y1="200" x2="200" y2="50" className="n-line n-line-2" />
-                             <line x1="200" y1="200" x2="350" y2="200" className="n-line n-line-2" />
-                             <line x1="200" y1="200" x2="200" y2="350" className="n-line n-line-2" />
-                             <line x1="200" y1="200" x2="50" y2="200" className="n-line n-line-2" />
-                             <circle cx="200" cy="200" r="140" fill="none" stroke="rgba(99,102,241,0.1)" strokeWidth="1" strokeDasharray="4 8" className="orbit-ring" />
-                             <circle cx="200" cy="200" r="90" fill="none" stroke="rgba(236,72,153,0.08)" strokeWidth="1" strokeDasharray="3 6" className="orbit-ring-2" />
-                             <circle cx="80" cy="80" r="8" className="n-node" />
-                             <circle cx="320" cy="80" r="6" className="n-node n-node-2" />
-                             <circle cx="320" cy="320" r="8" className="n-node" />
-                             <circle cx="80" cy="320" r="6" className="n-node n-node-2" />
-                             <circle cx="200" cy="50" r="5" className="n-node n-node-3" />
-                             <circle cx="350" cy="200" r="5" className="n-node n-node-3" />
-                             <circle cx="200" cy="350" r="5" className="n-node n-node-3" />
-                             <circle cx="50" cy="200" r="5" className="n-node n-node-3" />
-                             <circle cx="200" cy="200" r="22" fill="rgba(99,102,241,0.08)" />
-                             <circle cx="200" cy="200" r="14" className="n-core" />
-                             <circle cx="200" cy="200" r="7" className="n-core-inner" />
+                     <div className="v41-module v41-mod-2" style={{ top: '100px', right: '60px', width: '240px', height: '240px', border: `1.2px solid ${d_purp}22`, borderRadius: '28px', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: `rotate(5deg) translate(${mousePos.x * 12}px, ${mousePos.y * 12}px)` }}>
+                        <div className="grid-flow-v41" style={{ width: '100%', height: '100%', backgroundSize: '30px 30px', backgroundImage: `radial-gradient(circle, ${d_purp}22 1.2px, transparent 1.2px)` }} />
+                        <div className="v20-icon-glow" style={{ position: 'absolute' }}>
+                           <svg width="80" height="80" viewBox="0 0 100 100" className="v41-mesh-icon">
+                              <polygon points="50,10 90,30 90,70 50,90 10,70 10,30" fill="none" stroke={d_purp} strokeOpacity="0.3" strokeWidth="2" />
+                              <polygon points="50,25 75,37 75,63 50,75 25,63 25,37" fill="none" stroke={d_purp} strokeOpacity="0.2" strokeWidth="1" />
                            </svg>
-                           <div className="neural-label">NEURAL ARCHITECTURE</div>
-                         </div>
-                      </div>
-                  </div>
-               )}
-
-               {/* 📦 CLEAN PRODUCTIVE GRID (Sync with Main Animation) */}
-               {!selectedService && (
-                  <div className="mosaic-v4 animate-fade-up">
-                     {serviceList.map((s, idx) => (
-                        <div key={s.id} className={`m4-card m4-idx-${idx + 1}`}
-                           onClick={() => {
-                              setSelectedService(s);
-                              window.scrollTo({ top: 0 });
-                           }}>
-                           <div className="m4-top">
-                              <div className="m4-num">0{s.id}</div>
-                              <h3 className="m4-title">{s.title}</h3>
-                           </div>
-
-                           <p className="m4-desc">{s.desc}</p>
-
-                           <div className="m4-stack">
-                              {s.stack.slice(0, 3).map((item, i) => (
-                                 <span key={i} className="m4-tag">{item}</span>
-                              ))}
-                           </div>
-
-                           <div className="m4-footer">
-                              <div className="m4-btn">
-                                 EXPLORE_VERTICAL
-                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="ico"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-                              </div>
-                           </div>
-                           <div className="glow-border" />
                         </div>
-                     ))}
-                  </div>
-               )}
-
-               {/* 💎 SERVICE DETAIL VIEW (Active State) */}
-               {selectedService && (
-                  <div className="service-detail-view animate-fade-up">
-                     <div className="detail-header">
-                        <button className="back-btn" onClick={handleBack}>
-                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
-                           BACK_TO_CATALOG
-                        </button>
-                        <div className="detail-meta">DEVN_LAB_0{selectedService.id} // PROFILE_ENGINE</div>
                      </div>
 
-                     <div className="detail-content-grid" style={{ transform: `translateY(${scrollY * 0.05}px)` }}>
-                        <div className="detail-left">
-                           <h1 className="detail-h1">{selectedService.title}</h1>
-                           <div className="detail-accent-line" />
-                           <p className="detail-long-desc">{selectedService.fullDesc}</p>
+                     <div className="v41-module v41-mod-3" style={{ top: '300px', right: '10px', width: '140px', background: '#000', color: '#fff', border: `1.2px solid ${d_purp}88`, zIndex: 2, transform: `rotate(2deg) translate(${mousePos.x * 35}px, ${mousePos.y * 35}px)` }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}><div className="v11-active-pulse" /><span style={{ fontSize: '0.45rem', fontWeight: 1000, letterSpacing: '2px' }}>LOGIC CORE</span></div>
+                        <div className="v41-shimmer-vivid" style={{ fontSize: '0.85rem', fontWeight: 1000 }}>CORE PROTOCOL</div>
+                     </div>
 
-                           <div className="detail-cta-box">
-                              <button className="discuss-cta" onClick={() => window.location.href = '/contact'}>
-                                 INITIATE_STRATEGY_DISCUSSON
-                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-                              </button>
-                           </div>
+                     <div className="v41-module v41-mod-4" style={{ top: '10px', right: '220px', padding: '8px 15px', border: `1.2px solid ${d_purp}22`, background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(15px)', zIndex: 4, transform: `rotate(-2deg) translate(${mousePos.x * 10}px, ${mousePos.y * 10}px)` }}>
+                        <span style={{ fontSize: '0.55rem', fontWeight: 1000, color: d_purp, letterSpacing: '3px' }}>PROTOCOL ACTIVE</span>
+                     </div>
+                  </div>
+               </div>
+
+               {/* SERVICE GRID */}
+               <div className="v41-grid-layout" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
+                  {serviceList.map((s) => (
+                     <div key={s.id} className="v41-service-card" style={{ border: `1.5px solid ${themeBorder}` }} onClick={() => setSelectedService(s)}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '40px' }}>
+                           <div className="v41-icon-box">{s.icon}</div>
                         </div>
-
-                        <div className="detail-right">
-                           <div className="spec-section">
-                              <h4 className="spec-h4">TECHNOLOGY_STACK</h4>
-                              <div className="spec-grid">
-                                 {selectedService.stack.map((t, i) => (
-                                    <div key={i} className="spec-pill">{t}</div>
-                                 ))}
-                              </div>
-                           </div>
-
-                           <div className="spec-section" style={{ marginTop: '50px' }}>
-                              <h4 className="spec-h4">EXECUTION_PROCESS</h4>
-                              <div className="process-list">
-                                 {selectedService.process.map((p, i) => (
-                                    <div key={i} className="process-item">
-                                       <span className="p-dot" />
-                                       {p}
-                                    </div>
-                                 ))}
-                              </div>
+                        <h3 className="v41-title-label">{s.title}</h3>
+                        <p className="v41-desc-text">{s.desc}</p>
+                        
+                        <div className="v41-explore-node">
+                           <span className="v41-explore-text">EXPLORE</span>
+                           <div className="v41-arrow-shift">
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                            </div>
                         </div>
                      </div>
-                  </div>
-               )}
+                  ))}
+               </div>
 
             </div>
          </main>
 
          <Footer />
 
+         {/* 🏆 THE ABSOLUTE FINAL SIDE DRAWER (NO UNDERSCORES, WORKING SCROLL) ───── */}
+         {selectedService && (
+            <div className="v41-drawer-overlay" onWheel={e => e.stopPropagation()} onTouchMove={e => e.stopPropagation()} onClick={() => setSelectedService(null)}>
+               <div className="v41-side-window" onClick={e => e.stopPropagation()}>
+                  <div className="v41-drawer-header">
+                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div className="v41-active-dot" />
+                        <span className="v41-head-shimmer">STRATEGIC PROTOCOL SYNC ACTIVE</span>
+                     </div>
+                     <button onClick={() => setSelectedService(null)} className="v41-close-btn">EXIT</button>
+                  </div>
+                  <div className="v41-drawer-scroll-jail">
+                     <div className="v41-content-inner">
+                        <section style={{ marginBottom: '60px' }}>
+                           <div className="v41-metadata-label">MISSION VERTICAL REF 0{selectedService.id}</div>
+                           <h2 className="v41-drawer-h2">{selectedService.title}</h2>
+                           <p className="v41-narrative">{selectedService.summary}</p>
+                        </section>
+                        <section style={{ marginBottom: '60px' }}>
+                           <h5 className="v41-section-label">PERFORMANCE SUCCESS MATRIX</h5>
+                           <div className="v41-bento-grid">
+                              {selectedService.specs.map((s, i) => (
+                                 <div key={i} className="v41-bento-item">
+                                    <span className="b-lbl">{s.label}</span>
+                                    <span className="b-val">{s.value}</span>
+                                 </div>
+                              ))}
+                           </div>
+                        </section>
+                        <section style={{ marginBottom: '60px' }}>
+                           <h5 className="v41-section-label">STRATEGIC EXECUTION ROADMAP</h5>
+                           <div className="v41-roadmap-flow">
+                              {selectedService.roadmap.map((r, i) => (
+                                 <div key={i} className="v41-roadmap-item">
+                                    <div className="v41-phase-tag">{r.phase}</div>
+                                    <div className="v41-phase-text">{r.step}</div>
+                                 </div>
+                              ))}
+                           </div>
+                        </section>
+                        <div style={{ marginTop: '70px' }}>
+                           <button onClick={() => window.location.href = '/contact'} className="v41-final-handshake">INITIATE PROTOCOL HANDSHAKE →</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         )}
+
          <style>{`
-            .themed-services-page { background: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+            @keyframes v41-slide { from { transform: translateX(100%); } to { transform: translateX(0); } }
+            @keyframes v41-float { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-8px) rotate(-1deg); } }
+            @keyframes v41-shimmer { to { background-position: 200% 0; } }
+            @keyframes v41-grid-move { from { background-position: 0 0; } to { background-position: 60px 60px; } }
 
-            /* Hero Layout */
-            .dec-hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px; align-items: center; margin-bottom: 150px; }
-            .dec-badge { font-size: 0.75rem; font-weight: 900; color: #1a1a2e; letter-spacing: 5px; margin-bottom: 35px; display: block; opacity: 0.55; }
-            .hero-h1 { font-size: 4.2rem; font-weight: 800; line-height: 1.1; letter-spacing: -2px; color: ${primaryNavy}; margin-bottom: 40px; }
-            .hero-h1 .thin-txt { font-weight: 100 !important; color: #a3a3bd; margin-right: 15px; }
-            .grad-bold { 
-               font-weight: 850 !important; 
-               background: ${purpleGradient}; -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-               letter-spacing: -2.5px;
-            }
-            .hero-p-txt { font-size: 1.15rem; line-height: 1.8; color: #5e5e77; max-width: 550px; font-weight: 350; }
+            .v41-hero-h1 { font-size: 4.2rem; font-weight: 1000; color: ${primaryNavy}; letter-spacing: -4px; line-height: 1; margin-bottom: 35px; }
+            .v41-hero-para { font-size: 1.2rem; line-height: 1.6; color: #64748b; font-weight: 400; }
+            .building-text-v41 { font-weight: 200; letter-spacing: 1px; color: #94a3b8; }
+            
+            .v41-ambient-fog { position: absolute; inset: -100px; background: radial-gradient(circle, rgba(61,31,194,0.06) 0%, transparent 70%); filter: blur(100px); z-index: -1; }
+            .v41-module { position: absolute; padding: 18px; border-radius: 20px; background: #ffffff; box-shadow: 0 40px 100px rgba(0,0,0,0.06), inset 0 0 35px rgba(61,31,194,0.06); transition: 0.6s; cursor: pointer; overflow: hidden; }
+            .v41-responsive-stack:hover .v41-module { border-color: ${d_purp}88 !important; box-shadow: 0 40px 100px rgba(61,31,194,0.12), inset 0 0 55px rgba(61,31,194,0.14); }
+            .v41-mod-1 { animation: v41-float 6s ease-in-out infinite; }
+            .v41-mod-2 .grid-flow-v41 { animation: v41-grid-move 10s linear infinite; }
+            .v41-mesh-icon { animation: v41-rot 40s linear infinite; opacity: 0.3; }
+            @keyframes v41-rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            .v41-shimmer-vivid { background: linear-gradient(90deg, #fff, ${brandMagenta}, #fff); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: v41-shimmer 1.5s linear infinite; }
 
-            .hero-box { display: flex; justify-content: flex-start; perspective: 1500px; padding-left: 40px; }
+            /* Cards Base */
+            .v41-service-card { position: relative; background: #fff; border-radius: 26px; cursor: pointer; transition: 0.6s; padding: 50px; overflow: hidden; }
+            .v41-service-card:hover { transform: translateY(-12px); border-color: ${d_purp} !important; box-shadow: 0 40px 80px rgba(61,31,194,0.08); }
+            .v41-icon-box { width: 50px; height: 50px; border-radius: 14px; background: rgba(61,31,194,0.06); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; transition: 0.4s; }
+            .v41-service-card:hover .v41-icon-box { background: ${d_purp}; color: #fff; transform: scale(1.1); }
+            .v41-title-label { font-size: 1.8rem; font-weight: 1000; margin-bottom: 18px; color: ${primaryNavy}; letter-spacing: -1.5px; }
+            .v41-desc-text { color: #64748b; line-height: 1.7; margin-bottom: 40px; }
+            .v41-explore-node { display: flex; align-items: center; gap: 12px; }
+            .v41-explore-text { font-size: 0.72rem; font-weight: 1000; color: #000; letter-spacing: 2px; }
+            .v41-arrow-shift { transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); color: #94a3b8; }
+            .v41-service-card:hover .v41-arrow-shift { color: ${d_purp}; transform: translateX(8px); }
 
-            /* Neural Viz */
-            .neural-viz {
-              width: 420px; height: 420px; position: relative;
-              display: flex; align-items: center; justify-content: center; flex-direction: column;
-              background: radial-gradient(circle at center, rgba(99,102,241,0.04) 0%, transparent 70%);
-              border-radius: 50%;
-              animation: viz-float 6s ease-in-out infinite;
-            }
-            .neural-svg { width: 380px; height: 380px; overflow: visible; animation: viz-rotate 40s linear infinite; }
-            .n-line { 
-              stroke: rgba(99,102,241,0.18); stroke-width: 1.2; 
-              stroke-dasharray: 8 4;
-              animation: dash-flow 3s linear infinite;
-            }
-            .n-line-2 { 
-              stroke: rgba(236,72,153,0.15); stroke-width: 0.8;
-              stroke-dasharray: 6 6;
-              animation: dash-flow 4s linear infinite reverse;
-            }
-            .n-node { 
-              fill: #6366f1; 
-              animation: node-breathe 3s ease-in-out infinite;
-            }
-            .n-node-2 { 
-              fill: #ec4899; 
-              animation: node-breathe 3s ease-in-out infinite 1s;
-            }
-            .n-node-3 { 
-              fill: rgba(99,102,241,0.5); 
-              animation: node-breathe 3s ease-in-out infinite 2s;
-            }
-            .n-core { 
-              fill: none; stroke: #6366f1; stroke-width: 2; 
-              stroke-dasharray: 4 3;
-              animation: core-rotate 8s linear infinite; 
-              transform-origin: 200px 200px; 
-            }
-            .n-core-inner { 
-              fill: #6366f1; 
-              animation: core-pulse 2s ease-in-out infinite;
-              filter: drop-shadow(0 0 6px rgba(99,102,241,0.5));
-            }
-            .orbit-ring { 
-              animation: orbit-spin 25s linear infinite; 
-              transform-origin: 200px 200px; 
-            }
-            .orbit-ring-2 { 
-              animation: orbit-spin 18s linear infinite reverse; 
-              transform-origin: 200px 200px; 
-            }
-            .neural-label {
-              font-size: 0.7rem; font-weight: 700; letter-spacing: 3px;
-              color: rgba(99,102,241,0.35); margin-top: 12px; text-align: center;
-              animation: label-fade 3s ease-in-out infinite;
+            /* Side Drawer Base (V41) */
+            .v41-drawer-overlay { position: fixed; inset: 0; background: rgba(10,15,30,0.7); backdrop-filter: blur(20px); z-index: 100001; display: flex; justify-content: flex-end; overscroll-behavior: contain; }
+            .v41-side-window { position: relative; background: #ffffff; display: flex; flex-direction: column; animation: v41-slide 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; height: 100vh; width: 40%; min-width: 480px; }
+            .v41-drawer-header { padding: 22px 50px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
+            .v41-active-dot { width: 8px; height: 8px; background: ${d_purp}; border-radius: 50%; box-shadow: 0 0 10px ${d_purp}; }
+            .v41-head-shimmer { font-size: 0.58rem; font-weight: 1000; color: ${d_purp}; letter-spacing: 4px; }
+            .v41-close-btn { background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 18px; border-radius: 30px; font-size: 0.65rem; font-weight: 1000; cursor: pointer; }
+            .v41-drawer-scroll-jail { flex: 1; overflow-y: auto; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+            .v41-content-inner { padding: 60px 45px; }
+
+            .v41-drawer-h2 { font-size: 2.6rem; font-weight: 1000; color: ${primaryNavy}; letter-spacing: -2.5px; margin-bottom: 30px; line-height: 1; }
+            .v41-narrative { font-size: 1.15rem; font-weight: 300; color: #64748b; line-height: 1.75; }
+            .v41-bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .v41-bento-item { padding: 25px; border-radius: 20px; border: 1px solid ${themeBorder}; }
+            .v41-phase-tag { font-size: 0.6rem; font-weight: 1000; color: ${d_purp}; padding: 4px 10px; background: rgba(61,31,194,0.04); border-radius: 6px; }
+            .v41-roadmap-item { display: flex; align-items: center; gap: 20px; padding: 15px 25px; background: #fdfdfd; border-radius: 18px; border: 1px solid #f1f5f9; }
+            .v41-final-handshake { width: 100%; padding: 22px; background: #000; color: #fff; border-radius: 20px; font-weight: 1000; }
+
+            /* ─── SURGICAL RESPONSIVE OVERRIDES (RECOVERED) ─── */
+            @media (max-width: 1023px) {
+               .v41-hero-flex { display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; }
+               .v41-hero-text { order: 1 !important; margin-bottom: 60px !important; text-align: center !important; }
+               .v41-responsive-stack { order: 2 !important; position: relative !important; right: auto !important; top: auto !important; margin: 0 auto 80px !important; scale: 0.85 !important; }
+               .v41-grid-layout { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
+               .v41-side-window { width: 100% !important; min-width: 100% !important; }
             }
 
-            @keyframes viz-float {
-              0%, 100% { transform: translateY(0); }
-              50% { transform: translateY(-12px); }
-            }
-            @keyframes viz-rotate { 100% { transform: rotate(360deg); } }
-            @keyframes dash-flow { 100% { stroke-dashoffset: -40; } }
-            @keyframes node-breathe { 
-              0%, 100% { opacity: 0.5; transform: scale(1); } 
-              50% { opacity: 1; transform: scale(1.3); } 
-            }
-            @keyframes core-rotate { 100% { transform: rotate(360deg); } }
-            @keyframes core-pulse { 
-              0%, 100% { opacity: 0.5; } 
-              50% { opacity: 1; } 
-            }
-            @keyframes orbit-spin { 100% { transform: rotate(360deg); } }
-            @keyframes label-fade {
-              0%, 100% { opacity: 0.3; }
-              50% { opacity: 0.7; }
-            }
-
-            /* Grid Layout */
-            .mosaic-v4 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; }
-            .m4-card {
-               background: #ffffff; border: 1px solid #f2f2f5; padding: 55px; border-radius: 4px;
-               transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative;
-               display: flex; flex-direction: column; justify-content: space-between;
-               box-shadow: 0 15px 45px rgba(0,0,0,0.03); min-height: 480px; cursor: pointer;
-            }
-            .m4-idx-2 { grid-row: span 1.15; }
-            .m4-card:hover { transform: translateY(-10px); border-color: ${brandMagenta}; box-shadow: 0 40px 90px rgba(0,0,0,0.06); }
-            .m4-title { font-size: 2.1rem; font-weight: 900; color: ${primaryNavy}; letter-spacing: -1px; margin-bottom: 25px; line-height: 1.15; }
-            .m4-desc { font-size: 1.05rem; color: #5e5e77; margin-bottom: 30px; line-height: 1.8; }
-            .m4-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
-            .m4-tag { font-size: 0.65rem; font-weight: 900; color: #8c8c9e; padding: 5px 12px; background: #f8f8fb; border: 1px solid #f0f0f5; text-transform: uppercase; }
-            .m4-btn { font-size: 0.75rem; font-weight: 950; color: ${brandMagenta}; letter-spacing: 2.5px; display: flex; align-items: center; gap: 10px; opacity: 0.4; transition: 0.3s; }
-            .m4-card:hover .m4-btn { opacity: 1; transform: translateX(5px); }
-
-            .service-detail-view { width: 100%; min-height: 70vh; position: relative; }
-            .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 80px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
-            .back-btn { background: none; border: none; font-size: 0.75rem; font-weight: 950; color: ${primaryNavy}; cursor: pointer; display: flex; align-items: center; gap: 15px; letter-spacing: 3px; }
-            .back-btn:hover { color: ${brandMagenta}; }
-            .detail-meta { font-family: 'Courier New', monospace; font-size: 0.7rem; color: #cbd5e1; font-weight: 850; letter-spacing: 2px; }
-
-            .detail-content-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 100px; }
-            .detail-h1 { font-size: 4.8rem; font-weight: 950; letter-spacing: -4px; color: ${primaryNavy}; margin-bottom: 30px; line-height: 1; }
-            .detail-accent-line { width: 80px; height: 4px; background: ${purpleGradient}; border-radius: 4px; margin-bottom: 45px; }
-            .detail-long-desc { font-size: 1.4rem; line-height: 1.7; color: #4b4b66; font-weight: 300; margin-bottom: 60px; }
-
-            .discuss-cta { 
-               display: flex; align-items: center; gap: 20px; padding: 22px 45px; border-radius: 4px; 
-               background: ${primaryNavy}; color: #fff; font-weight: 950; font-size: 0.85rem; letter-spacing: 3px; border: none; cursor: pointer;
-               box-shadow: 0 20px 50px rgba(26,26,46,0.15); transition: 0.3s;
-            }
-            .discuss-cta:hover { background: #000; transform: translateY(-5px); box-shadow: 0 30px 70px rgba(0,0,0,0.2); }
-
-            .spec-h4 { font-size: 0.75rem; font-weight: 950; color: ${brandMagenta}; letter-spacing: 4px; margin-bottom: 30px; }
-            .spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-            .spec-pill { padding: 18px; border: 1px solid #f0f0f5; background: #fafafa; font-size: 0.95rem; font-weight: 700; color: ${primaryNavy}; border-radius: 4px; }
-
-            .process-list { display: flex; flex-direction: column; gap: 20px; }
-            .process-item { display: flex; align-items: center; gap: 20px; font-size: 1.1rem; color: #4b4b66; font-weight: 350; }
-            .p-dot { width: 8px; height: 8px; background: ${brandMagenta}; border-radius: 50%; box-shadow: 0 0 10px ${brandMagenta}; }
-
-            .glow-border {
-               position: absolute; top:0; left:0; width:100%; height:100%; border: 3px solid transparent; border-radius: 4px;
-               background: ${purpleGradient} border-box; 
-               -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-               -webkit-mask-composite: destination-out; mask-composite: exclude;
-               opacity: 0; transition: 0.4s; pointer-events: none;
-            }
-            .m4-card:hover .glow-border { opacity: 1; }
-
-            @media (max-width: 1024px) {
-               .dec-hero { grid-template-columns: 1fr; text-align: center; }
-               .hero-box { justify-content: center; padding-left: 0; }
-               .neural-viz { width: 300px; height: 300px; }
-               .neural-svg { width: 270px; height: 270px; }
-               .hero-h1 { font-size: 3.2rem; }
-               .detail-content-grid { grid-template-columns: 1fr; gap: 60px; }
-               .detail-h1 { font-size: 3.2rem; }
-               .mosaic-v4 { grid-template-columns: 1fr 1fr; }
-            }
-            @media (max-width: 768px) {
-               .mosaic-v4 { grid-template-columns: 1fr; }
-               .neural-viz { width: 250px; height: 250px; }
-               .neural-svg { width: 220px; height: 220px; }
-               .hero-h1 { font-size: 2.5rem; letter-spacing: -1px; }
-               .hero-p-txt { font-size: 1rem; }
-               .m4-card { padding: 35px; min-height: 380px; }
+            @media (max-width: 767px) {
+               .v41-grid-layout { grid-template-columns: 1fr !important; }
+               .v41-hero-h1 { font-size: 2.8rem !important; }
+               .v41-responsive-stack { scale: 0.7 !important; margin-bottom: 40px !important; width: 320px !important; height: 320px !important; }
+               .v41-hero-para { font-size: 1.1rem !important; margin: 0 auto !important; }
+               .v41-side-window { animation: none !important; transform: translateX(0) !important; }
             }
          `}</style>
       </div>

@@ -16,15 +16,13 @@ import AboutPage from './components/AboutPage'
 import ServicesPage from './components/ServicesPage'
 import BlogPage from './components/BlogPage'
 import ProjectsPage from './components/ProjectsPage'
-import AssistantPage from './components/AssistantPage'
 import ContactPage from './components/ContactPage'
+import AdminPage from './components/AdminPage'
 import Footer from './components/Footer'
 
 function App() {
 
   useEffect(() => {
-
-    // 1. Universal Zero-Dependency Scroll Reveal Engine
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -33,19 +31,16 @@ function App() {
       })
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
 
-    // Global Generic Selector - Dynamically hunts main nodes to transform automatically
     setTimeout(() => {
       const targets = document.querySelectorAll(
         'section h2, section h4, .case-card, .way-row, .approach-card, .cta-card, .footer-col-1, .footer-col-2, .footer-col-3, .footer-col-4'
       )
-
-      targets.forEach((el, index) => {
+      targets.forEach((el) => {
         el.classList.add('scroll-reveal')
         observer.observe(el)
       })
     }, 450)
 
-    // 2. High-End InterInertia Fluid Engine Initialization
     const lenis = new Lenis({
       duration: 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -65,16 +60,15 @@ function App() {
     }
   }, [])
 
-  // Routing Logic
   const path = window.location.pathname;
 
-  const renderContent = () => {
+  const renderCurrentPage = () => {
     if (path === '/about') return <AboutPage />
     if (path === '/services') return <ServicesPage />
     if (path === '/blog') return <BlogPage />
     if (path === '/projects') return <ProjectsPage />
-    if (path === '/assistant') return <AssistantPage />
     if (path === '/contact') return <ContactPage />
+    if (path === '/admin') return <AdminPage />
     
     return (
       <div className="main-wrapper">
@@ -90,7 +84,6 @@ function App() {
         <FeaturedResources />
         <CTA />
         <Footer />
-        <Navbar />
       </div>
     )
   }
@@ -109,7 +102,10 @@ function App() {
         }
       `}</style>
 
-      {renderContent()}
+      {/* DEFINITIVE GLOBAL NAVBAR (V106) */}
+      {path !== '/admin' && <Navbar />}
+      
+      {renderCurrentPage()}
       
     </div>
   );

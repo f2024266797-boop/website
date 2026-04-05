@@ -39,7 +39,7 @@ export default function Testimonials() {
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C20.1216 16 21.017 16.8954 21.017 18V21C21.017 22.1046 20.1216 23 19.017 23H16.017C14.9124 23 14.017 22.1046 14.017 21ZM3.01697 21L3.01697 18C3.01697 16.8954 3.9124 16 5.01697 16H8.01697C9.12154 16 10.017 16.8954 10.017 18V21C10.017 22.1046 9.12154 23 8.01697 23H5.01697C3.9124 23 3.01697 22.1046 3.01697 21Z" transform="scale(1, -1) translate(0, -24)" /></svg>
          </div>
          <p style={{ fontSize: isMobile ? '1.05rem' : '1.25rem', color: textBody, lineHeight: 1.8, marginBottom: '5rem', padding: '0 1rem' }}>
-            Without any doubt I recommend Alcaline Solutions as one of the best web design and digital marketing agencies. 
+            Without any doubt I recommend Devnexes Solutions as one of the best web design and digital marketing agencies. 
             One of the best agencies I've came across so far. Wouldn't be hesitated to introduce their work to someone else.
          </p>
          <div style={{ position: 'absolute', bottom: 50, right: '2rem', width: 25, height: 25, color: '#f09' }}>

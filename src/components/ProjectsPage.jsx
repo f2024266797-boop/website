@@ -1,988 +1,430 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from './Navbar'
 import Footer from './Footer'
 
 const projectsData = [
    {
-      id: 1,
-      title: 'NexGen Fintech Core',
-      category: 'FINTECH',
-      client: 'Global Bank Group',
-      year: '2025',
-      desc: 'Architecting a low-latency transaction engine capable of 150k TPS with 99.999% uptime.',
-      img: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1600',
-      challenge: 'The existing legacy system suffered from 2s transaction latency and frequent downtime during peak hours.',
-      outcome: 'Reduced latency to 15ms. Implemented a distributed Rust-based engine with real-time fraud detection.',
-      metrics: ['150K TPS', '99.9% Uptime'],
-      stack: ['Rust', 'gRPC', 'PostgreSQL', 'Kubernetes'],
+      id: 1, title: 'Cortex IDE', category: 'Software', status: 'Stable', v: 'v2.1',
+      desc: 'Next-gen IDE with neural predictive loops and agentic code generation.',
+      img: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1200',
+      metrics: ['95% Auto-Code', 'Low Latency', '0-Lag Editing', 'Neural Predict'],
+      stack: ['Rust', 'Wasm', 'TypeScript', 'LLVM'],
+      spec: 'A surgical development environment designed for high-end agentic workflows. Cortex integrates local neural models to predict complex architectural patterns, reducing manual boilerplate by 90%. It features a kernel-level memory management system for zero-lag editing across massive monorepos, real-time collaborative cursors, and a built-in AI reviewer that flags logical errors before compilation.',
+      deliverables: ['Agentic code completion engine', 'Multi-language LSP fusion core', 'Real-time pair programming mesh', 'Built-in AI code reviewer', 'Kernel memory optimizer'],
+      price: '$180/mo',
+      planName: 'Studio Hub',
+      planDesc: 'Full team environment with shared intelligence and collaborative editing.',
+      features: ['Up to 12 Seats', 'Neural Code Prediction (Advanced)', 'Unlimited completions', 'Shared RAG Knowledge Base', 'Priority Support', 'CI/CD Integration']
    },
    {
-      id: 2,
-      title: 'Aura AI Healthcare',
-      category: 'AI LABS',
-      client: 'HealthPath Inc',
-      year: '2026',
-      desc: 'Deploying a HIPAA-compliant neural diagnostics platform for real-time patient analysis.',
-      img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1600',
-      challenge: 'Manual diagnostics were slow and prone to human error in high-stress clinical environments.',
-      outcome: 'Automated 70% of initial scan reviews with 98.4% accuracy through custom RAG-logic.',
-      metrics: ['98.4% Accuracy', 'HIPAA Secure'],
-      stack: ['Python', 'PyTorch', 'FastAPI', 'AWS HealthLake'],
+      id: 2, title: 'LexiBase Chat', category: 'Database', status: 'Live', v: 'v1.4',
+      desc: 'Transform raw SQL databases into conversational semantic layers with RAG-logic.',
+      img: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=1200',
+      metrics: ['Natural SQL', '99% Accuracy', 'ACID Compliant', 'Real-time Query'],
+      stack: ['Python', 'PostgreSQL', 'pgvector', 'FastAPI'],
+      spec: 'LexiBase bridges the gap between complex database schemas and natural language. It utilizes vectorized semantic indexing to allow non-technical stakeholders to query real-time data using conversational English. The engine maintains 100% ACID compliance, supports multi-tenant isolation, and delivers sub-50ms query translation across billion-row datasets with industrial-grade encryption at rest.',
+      deliverables: ['Natural language query engine', 'Vectorized semantic index layer', 'Multi-DB connection manager', 'Access control & audit logs', 'REST & GraphQL API export'],
+      price: '$150/mo',
+      planName: 'Core Query',
+      planDesc: 'Multi-database integration with custom RAG and advanced analytics.',
+      features: ['Up to 10 DB Connections', 'Advanced RAG Engine', '1M queries/month', 'Custom Embedding Models', 'Audit Logs & RBAC', 'Slack/Teams Integration']
    },
    {
-      id: 3,
-      title: 'Summit eCommerce',
-      category: 'ECOMMERCE',
-      client: 'PrimeRetail',
-      year: '2024',
-      desc: 'Building an elastic distributed storefront for 10M+ concurrent users during seasonal peaks.',
-      img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600',
-      challenge: 'Server crashes during Black Friday resulted in $12M lost revenue in previous years.',
-      outcome: 'Zero downtime during 10M concurrent user bursts. Optimized queries for 150% faster checkout.',
-      metrics: ['10M Users', 'Zero Downtime'],
-      stack: ['Next.js', 'Go', 'Redis', 'Terraform'],
+      id: 3, title: 'Vanguard Security', category: 'Cyber', status: 'Critical', v: 'v3.0',
+      desc: 'Autonomous threat neutralization agent for decentralized enterprise networks.',
+      img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200',
+      metrics: ['Zero-Day Shield', '99% Kill Rate', 'eBPF Kernel', '<1ms Response'],
+      stack: ['C', 'eBPF', 'Rust', 'Kubernetes'],
+      spec: 'Vanguard is an autonomous security kernel that operates at the eBPF layer. It monitors system calls in real-time to detect and neutralize advanced persistent threats (APTs) before they reach the application layer. The engine runs a holographic defense mesh across distributed cloud environments, maintaining a live threat graph that adapts to emerging zero-day exploits without requiring signature updates.',
+      deliverables: ['eBPF kernel monitor agent', 'Autonomous threat neutralization', 'Live threat graph dashboard', 'Zero-day pattern detection', 'Incident response playbooks'],
+      price: '$250/mo',
+      planName: 'Net Shield',
+      planDesc: 'Network-wide autonomous defense for growing engineering organizations.',
+      features: ['Up to 50 Nodes', 'Autonomous Threat Neutralization', 'Live Threat Graph', 'Slack Incident Alerts', 'Custom Playbooks', 'Quarterly Pentest Report']
    },
    {
-      id: 4,
-      title: 'Vanguard CyberLayer',
-      category: 'SECURITY',
-      client: 'IronGate Defense',
-      year: '2026',
-      desc: 'Automating enterprise security audits and real-time threat neutralization across global nodes.',
-      img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600',
-      challenge: 'The client faced 500+ daily phishing and DDoS attacks on decentralized nodes.',
-      outcome: 'Neutralized 99% of threats autonomously. Reduced audit time from 3 weeks to 4 hours.',
-      metrics: ['99% Protection', '4hr Audits'],
-      stack: ['Rust', 'Sentinel', 'Golang', 'Docker'],
+      id: 4, title: 'ChatMind', category: 'Messaging', status: 'Production', v: 'v2.2',
+      desc: 'Secure encrypted messaging with integrated AI assistant agents.',
+      img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1200',
+      metrics: ['E2EE Sync', '100M Scale', 'On-Device AI', 'Zero Data Leak'],
+      stack: ['Elixir', 'Flutter', 'WebRTC', 'Signal Protocol'],
+      spec: 'ChatMind combines military-grade end-to-end encryption with local-first AI processing. Unlike traditional messengers, ChatMind hosts personalized AI agents directly on the device — ensuring zero data exposure to external servers. Agents handle workflows, scheduling, and deep data analysis privately within chats, while the distributed Elixir backend handles 100M+ concurrent sessions with sub-100ms message delivery globally.',
+      deliverables: ['E2EE messaging core', 'On-device AI agent runtime', 'Multi-platform Flutter client', 'Workflow automation SDK', 'Admin broadcast & compliance tools'],
+      price: '$99/mo',
+      planName: 'Agent Max',
+      planDesc: 'Multi-agent orchestration with advanced workflow automation across teams.',
+      features: ['Up to 200 Users', 'Multi-Agent Orchestration', 'Workflow Automation SDK', 'File Sharing (100GB)', 'Desktop & Web Client', 'Custom AI Personas']
    },
    {
-      id: 5,
-      title: 'Oasis Smart Logistics',
-      category: 'LOGISTICS',
-      client: 'FleetTrack',
-      year: '2025',
-      desc: 'Real-time global tracking and route optimization for a fleet of 5,000 autonomous units.',
-      img: 'https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=1600',
-      challenge: 'GPS drift and inefficient routing caused 12% excess fuel consumption and delayed deliveries.',
-      outcome: 'Optimized routing by 22% using real-time IoT telemetry and predictive AI traffic models.',
-      metrics: ['5K Units', '22% Saved'],
-      stack: ['C++', 'Node.js', 'MQTT', 'Google Cloud IoT'],
+      id: 5, title: 'EduAI Hub', category: 'Education', status: 'Stable', v: 'v1.1',
+      desc: 'Adaptive neural feedback education platform with biometric tracking.',
+      img: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1200',
+      metrics: ['40% Retention Boost', 'L5 Adaptive', 'Biometric Input', 'Real-time Path'],
+      stack: ['React', 'TensorFlow', 'Python', 'WebGL'],
+      spec: 'EduAI Hub uses deep learning to customize curriculum paths in real-time. By analyzing engagement metrics and biometric feedback (via optional sensor integration), the platform identifies learning plateaus and automatically reconfigures challenging concepts into personalized modules. The system tracks knowledge decay curves, delivers spaced repetition schedules, and provides educator dashboards with per-student neural engagement heatmaps.',
+      deliverables: ['Adaptive curriculum engine', 'Biometric engagement tracker', 'Educator analytics dashboard', 'Spaced repetition scheduler', 'LMS integration (LTI 1.3)'],
+      price: '$160/mo',
+      planName: 'Academy Hub',
+      planDesc: 'Full platform for schools with educator dashboards and class analytics.',
+      features: ['Up to 500 Students', 'Full Adaptive Engine', 'Educator Dashboard', 'Biometric Tracking (Optional)', 'LMS Integration', 'Parent Portal']
    },
    {
-      id: 6,
-      title: 'Titan Energy Core',
-      category: 'INDUSTRIAL',
-      client: 'EcoNext Power',
-      year: '2026',
-      desc: 'Managing decentralized energy grids through high-integrity software-defined power nodes.',
-      img: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1600',
-      challenge: 'Energy waste in distributed grids was reaching 15% due to poor load balancing.',
-      outcome: 'Implemented real-time load shifting, reducing energy waste to 4% across the state grid.',
-      metrics: ['State-Wide', '4% Waste'],
-      stack: ['Rust', 'Elixir', 'TimescaleDB', 'Kubernetes'],
+      id: 6, title: 'Voyager AR', category: 'Travel', status: 'Live', v: 'v2.0',
+      desc: 'Geospatial travel orchestrator with high-fidelity AR navigation layers.',
+      img: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1200',
+      metrics: ['100% Offline', 'AR Mapping', 'Digital Twin', 'Multi-Lang'],
+      stack: ['Unity', 'C++', 'Swift', 'ARKit'],
+      spec: 'Voyager AR redefines geospatial exploration using high-fidelity augmented reality. It creates a digital twin of physical landmarks, providing historical overlays, real-time translations, and interactive wayfinding that operates completely offline using edge-mapping technology. The platform supports custom branded AR experiences for tourism agencies, with proprietary spatial anchoring that remains accurate to within 5cm in open environments.',
+      deliverables: ['Offline AR navigation engine', 'Digital twin landmark system', 'Real-time translation overlay', 'Custom AR experience builder', 'Agency white-label SDK'],
+      price: '$199/mo',
+      planName: 'Global AR',
+      planDesc: 'Unlimited global AR twin access with premium overlays and analytics.',
+      features: ['Global AR Access', 'Historical & Cultural Overlays', '40+ Languages', 'Analytics Dashboard', 'Custom POI Editor', 'API Access']
    }
 ]
 
-const CATEGORIES = ['All', 'FINTECH', 'AI LABS', 'ECOMMERCE', 'SECURITY', 'LOGISTICS', 'INDUSTRIAL']
+const CATEGORIES = ['All', 'Software', 'Database', 'Cyber', 'Messaging', 'Education', 'Travel']
 
 export default function ProjectsPage() {
    const [filter, setFilter] = useState('All')
    const [selected, setSelected] = useState(null)
-   const [hovered, setHovered] = useState(null)
-   const [isSubmitting, setIsSubmitting] = useState(false)
-
-   const handleProposal = (e) => {
-      e.preventDefault()
-      setIsSubmitting(true)
-      setTimeout(() => {
-         setIsSubmitting(false)
-         alert('Your project proposal has been submitted successfully. Our team will reach out within 24 hours.')
-         e.target.reset()
-      }, 1500)
-   }
-
-   const [scrollY, setScrollY] = useState(0)
+   const c_mix = 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)'
+   const c_purp = '#a855f7'
+   const c_pink = '#ec4899'
 
    useEffect(() => {
       window.scrollTo(0, 0)
-      document.body.style.backgroundColor = '#ffffff'
-      
-      const handleScroll = () => {
-         setScrollY(window.scrollY)
+   }, [])
+
+   useEffect(() => {
+      if (selected) {
+         document.body.style.overflow = 'hidden'
+      } else {
+         document.body.style.overflow = 'unset'
       }
-      window.addEventListener('scroll', handleScroll, { passive: true })
-
-      // 👁️ REVEAL ON SCROLL OBSERVER
-      const observerOptions = { threshold: 0.05 };
-      const observer = new IntersectionObserver((entries) => {
-         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-               entry.target.classList.add('reveal-active');
-            }
-         });
-      }, observerOptions);
-
-      const targets = document.querySelectorAll('.scroll-reveal');
-      targets.forEach(t => observer.observe(t));
-
-      return () => {
-         window.removeEventListener('scroll', handleScroll);
-         targets.forEach(t => observer.unobserve(t));
-      }
-   }, [selected, filter]) // Re-run when filter changes to observe new items
+      return () => { document.body.style.overflow = 'unset' }
+   }, [selected])
 
    const filteredProjects = filter === 'All' ? projectsData : projectsData.filter(p => p.category === filter)
 
    return (
-      <div className="proj-root">
-         <Navbar />
-         <main>
-            {/* HERO */}
-            {!selected && (
-               <section className="proj-hero">
-                  <div className="proj-container">
-                     <div className="proj-hero-split scroll-reveal">
-                        <div className="proj-hero-left" style={{ transform: `translateY(${scrollY * 0.25}px)` }}>
-                           <div className="proj-overline-wrap">
-                              <span className="proj-overline">Our Work</span>
-                              <span className="proj-year-badge">2024 - 2026</span>
-                           </div>
-                           <h1 className="proj-hero-title">
-                              We Build <br />
-                              <span className="proj-gradient-text">What Matters.</span>
-                           </h1>
-                           <p className="proj-hero-desc">
-                              From fintech engines processing 150K TPS to AI diagnostics with 98% accuracy — explore the systems we've engineered for industry leaders.
-                           </p>
+      <div className="v104-root">
 
-                           {/* Live Stats Strip */}
-                           <div className="proj-stats-strip">
-                              <div className="proj-stat">
-                                 <span className="proj-stat-num">06</span>
-                                 <span className="proj-stat-label">Projects</span>
-                              </div>
-                              <div className="proj-stat-divider" />
-                              <div className="proj-stat">
-                                 <span className="proj-stat-num">12+</span>
-                                 <span className="proj-stat-label">Clients</span>
-                              </div>
-                              <div className="proj-stat-divider" />
-                              <div className="proj-stat">
-                                 <span className="proj-stat-num">99.9%</span>
-                                 <span className="proj-stat-label">Uptime</span>
-                              </div>
-                           </div>
-
-                           <div className="proj-tabs">
-                              {CATEGORIES.map(cat => (
-                                 <button
-                                    key={cat}
-                                    onClick={() => setFilter(cat)}
-                                    className={`proj-tab ${filter === cat ? 'proj-tab-active' : ''}`}
-                                 >
-                                    {cat}
-                                 </button>
-                              ))}
-                           </div>
+         <main className="v104-main">
+            
+            {/* HER0 V117 */}
+            <section className="v104-hero">
+               <div className="v104-mesh-layer" />
+               <div className="v104-glow-eff" />
+               <div className="proj-container">
+                  <div className="v104-hero-flex">
+                     <div className="v104-hero-info">
+                        <div className="v104-eyebrow"><span className="v104-dot" /><span className="v104-tag">Institutional Product Repository</span></div>
+                        <h1 className="v104-h1"><span className="v104-thin">Building</span> <span className="v104-bold">what</span> <br /><span className="v104-mix">matters.</span></h1>
+                        <p className="v104-desc">Surgical precision in digital architecture. Explore our specialized project environment portfolio.</p>
+                        
+                        <div className="v104-filters">
+                           {CATEGORIES.map(cat => (
+                              <button key={cat} onClick={() => setFilter(cat)} className={`v104-cat-btn ${filter === cat ? 'active' : ''}`}>{cat}</button>
+                           ))}
                         </div>
+                     </div>
 
-                        <div className="proj-hero-right" style={{ transform: `translateY(${scrollY * 0.12}px)` }}>
-                           <div className="proj-hero-viz">
-                              <svg className="neural-svg" viewBox="0 0 400 400">
-                                 {/* Base Lines (Connecting Nodes) */}
-                                 <path className="n-line" d="M200 50 L100 150 L200 250 L300 150 Z" />
-                                 <path className="n-line" d="M200 50 L300 150 L200 250 L100 150 Z" />
-                                 <path className="n-line-2" d="M100 150 L50 200 M300 150 L350 200 M200 50 L200 20 M200 250 L200 280" />
-                                 
-                                 {/* Central Core */}
-                                 <circle className="n-core" cx="200" cy="150" r="60" />
-                                 <circle className="n-core-inner" cx="200" cy="150" r="12" />
-                                 
-                                 {/* Orbiting Points (Satellite Nodes) */}
-                                 <g className="orbit-ring">
-                                    <circle cx="200" cy="90" r="5" className="n-node" />
-                                    <circle cx="200" cy="210" r="4" className="n-node" />
-                                    <circle cx="140" cy="150" r="4" className="n-node-2" />
-                                    <circle cx="260" cy="150" r="5" className="n-node-2" />
-                                 </g>
-                                 
-                                 <g className="orbit-ring-2">
-                                    <circle cx="160" cy="100" r="3" className="n-node-3" />
-                                    <circle cx="240" cy="200" r="3" className="n-node-3" />
-                                 </g>
-                              </svg>
-                           </div>
-                           <div className="proposal-card">
-                              <h3 className="proposal-title">Start a Project</h3>
-                              <p className="proposal-desc">Share your vision and let's build something extraordinary together.</p>
-                              <form onSubmit={handleProposal} className="proposal-form">
-                                 <div className="proposal-field">
-                                    <label>Your Name</label>
-                                    <input type="text" placeholder="Enter your name" required />
-                                 </div>
-                                 <div className="proposal-field">
-                                    <label>Email</label>
-                                    <input type="email" placeholder="you@company.com" required />
-                                 </div>
-                                 <div className="proposal-field">
-                                    <label>Project Details</label>
-                                    <textarea placeholder="Describe your project requirements..." required></textarea>
-                                 </div>
-                                 <button type="submit" className="proposal-submit" disabled={isSubmitting}>
-                                    {isSubmitting ? 'Submitting...' : 'Submit Proposal'}
-                                    {!isSubmitting && <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>}
-                                 </button>
-                              </form>
-                           </div>
+                     <div className="v104-portal">
+                        <div className="v104-cta-card">
+                           <div className="v104-cta-head"><span className="v104-f-lbl">Strategy Initiator</span><div className="v104-f-pulse" /></div>
+                           <h2 className="v104-cta-h2">Ready to deploy?</h2>
+                           <p className="v104-cta-p">Connect with our engineering masters to begin your institutional strategy proposal.</p>
+                           <button onClick={() => window.location.href='/contact'} className="v104-cta-btn">Send Proposal →</button>
+                           <div className="v104-neon-rim" />
                         </div>
                      </div>
                   </div>
-               </section>
-            )}
+               </div>
+            </section>
 
-            {/* PROJECT GRID */}
-            {!selected && (
+            {/* GRID V119 */}
+            <div className="v118-grid-sec">
                <div className="proj-container">
-                  <div className="proj-grid">
-                     {filteredProjects.map((proj, idx) => (
-                        <div
-                           key={proj.id}
-                           className={`proj-card scroll-reveal ${idx === 0 ? 'proj-card-featured' : ''}`}
-                           style={{ '--reveal-delay': `${(idx % 3) * 0.15}s` }}
-                           onClick={() => { setSelected(proj); window.scrollTo({ top: 0 }); }}
-                           onMouseEnter={() => setHovered(proj.id)}
-                           onMouseLeave={() => setHovered(null)}
-                        >
-                           <div className="proj-card-img-wrap">
-                              <img
-                                 src={proj.img}
-                                 alt={proj.title}
-                                 className="proj-card-img"
-                                 style={{ transform: hovered === proj.id ? 'scale(1.04)' : 'scale(1)' }}
-                                 loading="lazy"
-                              />
-                              <div className="proj-card-img-overlay" />
-                              <span className="proj-cat-badge">{proj.category}</span>
-                           </div>
-                           <div className="proj-card-body">
-                              <div className="proj-card-meta">
-                                 <span>{proj.client}</span>
-                                 <span className="proj-dot" />
-                                 <span>{proj.year}</span>
-                              </div>
-                              <h3 className="proj-card-title">{proj.title}</h3>
-                              <p className="proj-card-desc">{proj.desc}</p>
-                              <div className="proj-card-footer">
-                                 <div className="proj-metrics">
-                                    {proj.metrics.map(m => (
-                                       <span key={m} className="proj-metric">{m}</span>
-                                    ))}
+                  <div className="v118-grid">
+                     {filteredProjects.map((proj) => (
+                        <div key={proj.id} className="v118-card" onClick={() => setSelected(proj)}>
+                           <div className="v118-media">
+                              <img src={proj.img} alt={proj.title} crossOrigin="anonymous" />
+                              <div className="v118-overlay-glow" />
+                              <div className="v118-badge-tier">{proj.price} Starting</div>
+                              <div className="v119-meta-bar">
+                                 <div className="v119-meta-cat">{proj.category}</div>
+                                 <div className={`v119-meta-stat ${proj.status.toLowerCase()}`}>
+                                    <span className="v119-pulse" />
+                                    {proj.status}
                                  </div>
-                                 <span className="proj-card-cta">
-                                    View Case Study
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                                 </span>
                               </div>
                            </div>
+                           <div className="v118-body">
+                              <h3 className="v118-h3">{proj.title}</h3>
+                              <p className="v118-desc-txt">{proj.desc}</p>
+                              <div className="v118-stack-mesh">
+                                 {proj.stack?.map(s => <span key={s} className="v118-s-chip">{s}</span>)}
+                              </div>
+                              <div className="v118-footer">
+                                 <div className="v118-version-id">{proj.v}</div>
+                                 <div className="v118-right">
+                                    <div className="v118-price-tag">{proj.price}</div>
+                                    <span className="v118-details-link">Details →</span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div className="v118-holographic-rim" />
                         </div>
                      ))}
                   </div>
                </div>
-            )}
+            </div>
+         </main>
+         <Footer />
 
-            {/* CASE STUDY DETAIL */}
-            {selected && (
-               <div className="case-root">
-                  <div className="case-nav proj-container">
-                     <button onClick={() => setSelected(null)} className="case-back-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
-                        Back to Projects
-                     </button>
-                     <span className="case-ref">Case Study #{String(selected.id).padStart(2, '0')}</span>
+         {/* 🏆 MISSION CONTROL DRAWER (V121 FIX) 🏆 */}
+         {selected && (
+            <div className="v120-overlay" onClick={() => setSelected(null)}>
+               <div className="v120-drawer" onClick={e => e.stopPropagation()}>
+                  
+                  <div className="v120-head">
+                     <div className="v120-h-left">
+                        <div className="v120-status-dot" />
+                        <span className="v120-session-id">MISSION ID: {selected.id}00X9</span>
+                     </div>
+                     <button className="v120-close" onClick={() => setSelected(null)}>EXIT MISSION</button>
                   </div>
 
-                  <div className="proj-container">
-                     <header className="case-header">
-                        <p className="case-category">{selected.category}</p>
-                        <h1 className="case-title">{selected.title}</h1>
-                        <div className="case-meta">
-                           <div className="case-meta-item">
-                              <span className="case-meta-label">Client</span>
-                              <span className="case-meta-value">{selected.client}</span>
-                           </div>
-                           <div className="case-meta-item">
-                              <span className="case-meta-label">Year</span>
-                              <span className="case-meta-value">{selected.year}</span>
-                           </div>
-                           <div className="case-meta-item">
-                              <span className="case-meta-label">Lead</span>
-                              <span className="case-meta-value">Devnexes Labs</span>
-                           </div>
-                        </div>
-                     </header>
-
-                     <div className="case-hero-img">
-                        <img src={selected.img} alt={selected.title} />
-                     </div>
-
-                     <div className="case-body-grid">
-                        <div className="case-main">
-                           <div className="case-section">
-                              <h3 className="case-section-label">The Challenge</h3>
-                              <p className="case-section-text">{selected.challenge}</p>
-                           </div>
-                           <div className="case-section">
-                              <h3 className="case-section-label">Our Solution</h3>
-                              <p className="case-section-text">{selected.desc}</p>
-                           </div>
-                           <div className="case-section">
-                              <h3 className="case-section-label">The Outcome</h3>
-                              <p className="case-section-text">{selected.outcome}</p>
-                           </div>
+                  {/* SCROLLABLE AREA — data-lenis-prevent stops Lenis hijacking scroll */}
+                  <div className="v120-scroll-area" data-lenis-prevent>
+                     <div className="v120-inner">
+                        
+                        <div className="v120-identity">
+                           <div className="v120-badge">{selected.category} PORTFOLIO</div>
+                           <h2 className="v120-title">{selected.title}</h2>
+                           <p className="v120-tagline">{selected.desc}</p>
                         </div>
 
-                        <aside className="case-sidebar">
-                           <div className="case-aside-box">
-                              <h4 className="case-aside-title">Tech Stack</h4>
-                              <div className="case-pills">
-                                 {selected.stack.map(s => <span key={s} className="case-pill">{s}</span>)}
-                              </div>
+                        <div className="v120-media-hero">
+                           <img src={selected.img} alt="Hero" />
+                           <div className="v120-v-tag">{selected.v} INSTITUTIONAL</div>
+                        </div>
+
+                        {/* 01 / TECHNICAL DNA */}
+                        <section className="v120-section">
+                           <h5 className="v120-sec-lbl">01 / TECHNICAL DNA</h5>
+                           <p className="v120-spec-txt">{selected.spec}</p>
+                           <div className="v120-metrics-grid">
+                              {selected.metrics?.map(m => (
+                                 <div key={m} className="v120-metric-card">
+                                    <span className="v120-m-val">{m}</span>
+                                    <span className="v120-m-lbl">KPI TARGET</span>
+                                 </div>
+                              ))}
                            </div>
-                           <div className="case-aside-box">
-                              <h4 className="case-aside-title">Key Results</h4>
-                              <ul className="case-results">
-                                 {selected.metrics.map(m => (
-                                    <li key={m}>
-                                       <span className="case-result-dot" />
-                                       {m}
+                        </section>
+
+                        {/* 02 / DELIVERABLES */}
+                        {selected.deliverables && (
+                           <section className="v120-section">
+                              <h5 className="v120-sec-lbl">02 / KEY DELIVERABLES</h5>
+                              <ul className="v120-deliverables-list">
+                                 {selected.deliverables.map(d => (
+                                    <li key={d} className="v120-del-item">
+                                       <span className="v120-del-dot">▸</span>
+                                       {d}
                                     </li>
                                  ))}
                               </ul>
-                           </div>
-                        </aside>
-                     </div>
+                           </section>
+                        )}
 
-                     <div className="case-cta-strip">
-                        <div>
-                           <h3 className="case-cta-title">Need a similar solution?</h3>
-                           <p className="case-cta-desc">Our senior engineering team is ready to architect your next system.</p>
+                        {/* 03 / INVESTMENT ARCHITECTURE */}
+                        <section className="v120-section">
+                           <h5 className="v120-sec-lbl">03 / INVESTMENT ARCHITECTURE</h5>
+                           <div className="v121-plan-card popular">
+                              <div className="v121-popular-tag">INSTITUTIONAL TIER</div>
+                              <div className="v121-p-header">
+                                 <span className="v121-p-name">{selected.planName}</span>
+                                 <span className="v121-p-price">{selected.price}</span>
+                              </div>
+                              <p className="v121-p-desc">{selected.planDesc}</p>
+                              {selected.features && (
+                                 <ul className="v121-features-list">
+                                    {selected.features.map(f => (
+                                       <li key={f} className="v121-feat-item">
+                                          <span className="v121-feat-check">✓</span>
+                                          {f}
+                                       </li>
+                                    ))}
+                                 </ul>
+                              )}
+                              <div className="v121-p-neon" />
+                           </div>
+                        </section>
+
+                        {/* 04 / STACK MAPPING */}
+                        <section className="v120-section">
+                           <h5 className="v120-sec-lbl">04 / STACK MAPPING</h5>
+                           <div className="v120-stack-wrap">
+                              {selected.stack?.map(s => (
+                                 <div key={s} className="v120-stack-pill">{s}</div>
+                              ))}
+                           </div>
+                        </section>
+
+                        <div style={{ paddingBottom: '50px' }}>
+                           <button onClick={() => window.location.href='/contact'} className="v120-cta-final">INITIATE DEPLOYMENT PROTOCOL →</button>
                         </div>
-                        <button className="case-cta-btn" onClick={() => window.location.href='/contact'}>
-                           Start a Project
-                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                        </button>
                      </div>
                   </div>
                </div>
-            )}
-         </main>
-
-         <Footer />
+            </div>
+         )}
 
          <style>{`
-            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
-
-            .proj-root {
-               background: #fff;
-               min-height: 100vh;
-               font-family: 'Outfit', sans-serif;
-               color: #0f172a;
-            }
-            .proj-container {
-               max-width: 1280px;
-               margin: 0 auto;
-               padding: 0 30px;
-            }
-
-            /* HERO */
-            .proj-hero {
-               padding: 120px 0 60px 0;
-               background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
-               border-bottom: 1px solid #f1f5f9;
-            }
-            .proj-overline-wrap {
-               display: flex;
-               align-items: center;
-               gap: 14px;
-               margin-bottom: 24px;
-            }
-            .proj-overline {
-               font-size: 0.8rem;
-               font-weight: 700;
-               letter-spacing: 3px;
-               text-transform: uppercase;
-               color: #6366f1;
-            }
-            .proj-year-badge {
-               font-size: 0.72rem;
-               font-weight: 600;
-               color: #94a3b8;
-               background: #f1f5f9;
-               border: 1px solid #e2e8f0;
-               padding: 4px 12px;
-               border-radius: 20px;
-               letter-spacing: 1px;
-            }
-            .proj-hero-title {
-               font-family: 'Playfair Display', serif;
-               font-size: 3.8rem;
-               font-weight: 700;
-               line-height: 1.05;
-               letter-spacing: -1.5px;
-               color: #0f172a;
-               margin-bottom: 20px;
-            }
-            .proj-gradient-text {
-               background: linear-gradient(90deg, #6366f1, #ec4899);
-               -webkit-background-clip: text;
-               -webkit-text-fill-color: transparent;
-            }
-            .proj-hero-desc {
-               font-size: 1.15rem;
-               color: #64748b;
-               max-width: 520px;
-               line-height: 1.8;
-               font-weight: 300;
-               margin-bottom: 35px;
-            }
-
-            /* Stats Strip */
-            .proj-stats-strip {
-               display: flex;
-               align-items: center;
-               gap: 30px;
-               margin-bottom: 40px;
-               padding: 20px 0;
-               border-top: 1px solid #f1f5f9;
-               border-bottom: 1px solid #f1f5f9;
-            }
-
-            /* 👁️ SCROLL REVEAL ENGINE */
-            .scroll-reveal {
-               opacity: 0;
-               transform: translateY(40px);
-               transition: all 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
-               transition-delay: var(--reveal-delay, 0s);
-               will-change: transform, opacity;
-            }
-            .scroll-reveal.reveal-active {
-               opacity: 1 !important;
-               transform: translateY(0) !important;
-            }
-
-            .proj-hero { 
-               background: #fff; padding-top: 140px; padding-bottom: 80px; 
-               position: relative; overflow: hidden;
-               border-bottom: 1px solid #f1f5f9;
-            }
-            .proj-stat { text-align: center; }
-            .proj-stat-num {
-               display: block;
-               font-family: 'Playfair Display', serif;
-               font-size: 2rem;
-               font-weight: 700;
-               color: #0f172a;
-               line-height: 1;
-               margin-bottom: 4px;
-            }
-            .proj-stat-label {
-               font-size: 0.72rem;
-               font-weight: 500;
-               color: #94a3b8;
-               letter-spacing: 1px;
-               text-transform: uppercase;
-            }
-            .proj-stat-divider {
-               width: 1px;
-               height: 40px;
-               background: #e2e8f0;
-            }
-
-            /* HERO SPLIT */
-            .proj-hero-split {
-               display: flex;
-               gap: 50px;
-               align-items: flex-start;
-               justify-content: center;
-               max-width: 1050px;
-               margin: 0 auto;
-            }
-            .proj-hero-left { flex: 1; }
-            .proj-hero-right { 
-               flex-shrink: 0; 
-               position: relative; /* Needed for absolute viz placement */
-            }
-
-            /* Neural Viz Hero Element */
-            .proj-hero-viz {
-               position: absolute;
-               top: -50px;
-               left: -120px;
-               width: 500px;
-               height: 500px;
-               z-index: -1; /* Place behind form */
-               pointer-events: none;
-               opacity: 0.6;
-               filter: blur(0.5px);
-            }
+            @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@800&display=swap');
             
-            .neural-svg { width: 100%; height: 100%; overflow: visible; animation: viz-rotate 60s linear infinite; }
-            .n-line { stroke: rgba(99,102,241,0.22); stroke-width: 1.5; stroke-dasharray: 8 4; animation: dash-flow 4s linear infinite; }
-            .n-line-2 { stroke: rgba(236,72,153,0.18); stroke-width: 1; stroke-dasharray: 6 6; animation: dash-flow 5s linear infinite reverse; }
-            .n-node { fill: #6366f1; animation: node-breathe 3s ease-in-out infinite; }
-            .n-node-2 { fill: #ec4899; animation: node-breathe 3s ease-in-out infinite 1s; }
-            .n-node-3 { fill: rgba(99,102,241,0.5); animation: node-breathe 3s ease-in-out infinite 2.5s; }
-            .n-core { fill: none; stroke: #6366f1; stroke-width: 2; stroke-dasharray: 4 3; animation: core-rotate 10s linear infinite; transform-origin: 200px 150px; }
-            .n-core-inner { fill: #6366f1; animation: core-pulse 2s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(99,102,241,0.6)); }
-            .orbit-ring { animation: orbit-spin 30s linear infinite; transform-origin: 200px 150px; }
-            .orbit-ring-2 { animation: orbit-spin 22s linear infinite reverse; transform-origin: 200px 150px; }
+            .v104-root { background: #fff; min-height: 100vh; font-family: 'Plus Jakarta Sans', sans-serif; color: #1e293b; overflow-x: hidden; }
+            .proj-container { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+            .v104-hero { padding: 130px 0 100px 0; background: #fff; border-bottom: 1.5px solid #f8fafc; position: relative; overflow: hidden; }
+            .v104-mesh-layer { position: absolute; inset: 0; background-image: radial-gradient(rgba(148,163,184,0.18) 1.2px, transparent 1.2px); background-size: 35px 35px; opacity: 0.6; }
+            .v104-glow-eff { position: absolute; width: 500px; height: 500px; border-radius: 50%; filter: blur(100px); background: ${c_purp}12; top: -10%; left: -5%; opacity: 0.12; }
+            .v104-hero-flex { display: flex; align-items: center; justify-content: space-between; gap: 80px; position: relative; z-index: 10; }
+            .v104-hero-info { flex: 1.2; text-align: left; }
+            .v104-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 25px; }
+            .v104-tag { font-size: 0.72rem; font-weight: 700; color: #94a3b8; letter-spacing: 1.5px; text-transform: uppercase; }
+            .v104-dot { width: 5px; height: 5px; background: ${c_pink}; border-radius: 50%; box-shadow: 0 0 10px ${c_pink}; }
+            .v104-h1 { font-size: 3.8rem; letter-spacing: -2.8px; line-height: 1.05; color: #0f172a; margin-bottom: 30px; }
+            .v104-thin { font-weight: 200 !important; color: #475569; }
+            .v104-bold { font-weight: 800 !important; color: #0f172a; }
+            .v104-mix { font-weight: 800 !important; background: ${c_mix}; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+            .v104-desc { font-size: 1.15rem; color: #64748b; max-width: 500px; line-height: 1.7; margin-bottom: 45px; }
+            .v104-cat-btn { background: #fff; border: 1.5px solid #f1f5f9; padding: 11px 24px; border-radius: 12px; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: 0.3s; color: #64748b; }
+            .v104-cat-btn.active { background: ${c_mix}; color: #fff; border-color: transparent; }
+            .v104-filters { display: flex; gap: 10px; flex-wrap: wrap; }
+            .v104-portal { flex: 0.85; }
+            .v104-cta-card { background: #fff; border-radius: 35px; padding: 45px; position: relative; box-shadow: 0 40px 80px rgba(0,0,0,0.02); }
+            .v104-neon-rim { position: absolute; inset: -1.8px; z-index: -1; border-radius: 37px; background: ${c_mix}; opacity: 0.35; }
+            .v104-cta-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; border-bottom: 1.5px solid #f8fafc; padding-bottom: 15px; }
+            .v104-f-lbl { font-size: 0.65rem; font-weight: 800; color: #cbd5e1; letter-spacing: 3px; text-transform: uppercase; }
+            .v104-f-pulse { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; }
+            .v104-cta-h2 { font-size: 1.65rem; font-weight: 800; color: #0f172a; margin-bottom: 15px; }
+            .v104-cta-p { font-size: 0.95rem; color: #64748b; line-height: 1.6; margin-bottom: 30px; }
+            .v104-cta-btn { width: 100%; background: ${c_mix}; color: #fff; border: none; padding: 22px; border-radius: 14px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: 0.3s; }
+            .v118-grid-sec { background: #fdfdfe; padding: 100px 0 160px; }
+            .v118-grid { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 30px; row-gap: 50px; }
+            .v118-card { background: #fff; border-radius: 36px; border: 1.8px solid #f1f5f9; cursor: pointer; overflow: hidden; position: relative; transition: 0.8s; display: flex; flex-direction: column; }
+            .v118-card:hover { transform: translateY(-12px); border-color: ${c_purp}; box-shadow: 0 40px 80px rgba(168,85,247,0.1); }
+            .v118-holographic-rim { position: absolute; inset: -2px; z-index: -1; border-radius: 38px; background: ${c_mix}; opacity: 0; transition: 0.5s; }
+            .v118-card:hover .v118-holographic-rim { opacity: 0.5; }
+            .v118-media { height: 260px; position: relative; overflow: hidden; background: #000; }
+            .v118-media img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s; }
+            .v118-overlay-glow { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); }
+            .v118-badge-tier { position: absolute; top: 20px; right: 20px; background: #fff; color: #000; font-weight: 900; font-size: 0.65rem; padding: 5px 12px; border-radius: 6px; }
+            .v119-meta-bar { position: absolute; bottom: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: center; }
+            .v119-meta-cat { font-size: 0.55rem; font-weight: 900; color: #fff; letter-spacing: 2px; }
+            .v119-meta-stat { display: flex; align-items: center; gap: 6px; font-size: 0.6rem; font-weight: 800; color: #fff; background: rgba(34,197,94,0.4); padding: 4px 10px; border-radius: 50px; backdrop-filter: blur(5px); }
+            .v119-meta-stat.critical { background: rgba(239,68,68,0.4); }
+            .v119-pulse { width: 5px; height: 5px; background: #fff; border-radius: 50%; animation: v119-p 1s infinite; }
+            .v118-body { padding: 30px; flex: 1; display: flex; flex-direction: column; background: #fff; }
+            .v118-h3 { font-size: 1.6rem; font-weight: 800; color: #0f172a; margin-bottom: 12px; }
+            .v118-desc-txt { font-size: 0.9rem; color: #64748b; line-height: 1.6; margin-bottom: 20px; }
+            .v118-s-chip { font-size: 0.65rem; font-weight: 800; color: #475569; background: #f1f5f9; padding: 4px 10px; border-radius: 6px; margin: 0 6px 6px 0; display: inline-block; }
+            .v118-footer { border-top: 1.5px solid #f8fafc; padding-top: 20px; margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
+            .v118-version-id { font-size: 0.6rem; font-weight: 800; color: #cbd5e1; font-family: 'JetBrains Mono', monospace; }
+            .v118-price-tag { font-size: 0.8rem; font-weight: 900; color: ${c_purp}; margin-bottom: 4px; display: block; }
+            .v118-details-link { font-size: 0.85rem; font-weight: 900; color: ${c_purp}; }
 
-            @keyframes viz-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-            @keyframes dash-flow { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
-            @keyframes node-breathe { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
-            @keyframes core-pulse { 0%, 100% { r: 10; opacity: 0.5; } 50% { r: 14; opacity: 1; } }
-            @keyframes core-rotate { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-            @keyframes orbit-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            /* 🏆 SCROLLABLE DRAWER V121 FIX 🏆 */
+            .v120-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(15px); z-index: 1000000; display: flex; justify-content: flex-end; }
+            .v120-drawer { width: 40vw; min-width: 550px; height: 100vh; background: #fff; display: flex; flex-direction: column; animation: slideIn 0.5s ease-out; box-shadow: -40px 0 100px rgba(0,0,0,0.2); }
+            @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+            
+            .v120-head { padding: 25px 40px; border-bottom: 1.5px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+            .v120-h-left { display: flex; align-items: center; gap: 10px; }
+            .v120-status-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px rgba(34,197,94,0.5); }
+            .v120-session-id { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: #94a3b8; font-weight: 800; letter-spacing: 1px; }
+            .v120-close { padding: 8px 20px; border-radius: 50px; background: #000; color: #fff; border: none; font-size: 0.7rem; font-weight: 900; cursor: pointer; transition: 0.3s; }
+            .v120-close:hover { background: ${c_purp}; }
 
-            /* PROPOSAL FORM */
-            .proposal-card {
-               background: #fff;
-               border: 1px solid #e2e8f0;
-               border-radius: 16px;
-               padding: 35px;
-               width: 100%;
-               max-width: 380px;
-               box-shadow: 0 10px 40px rgba(0,0,0,0.04);
-            }
-            .proposal-title {
-               font-family: 'Playfair Display', serif;
-               font-size: 1.6rem;
-               font-weight: 700;
-               color: #0f172a;
-               margin-bottom: 8px;
-            }
-            .proposal-desc {
-               font-size: 0.9rem;
-               color: #94a3b8;
-               margin-bottom: 30px;
-               line-height: 1.5;
-            }
-            .proposal-form { display: flex; flex-direction: column; gap: 20px; }
-            .proposal-field { display: flex; flex-direction: column; gap: 6px; }
-            .proposal-field label {
-               font-size: 0.75rem;
-               font-weight: 600;
-               color: #64748b;
-               letter-spacing: 0.5px;
-               text-transform: uppercase;
-            }
-            .proposal-field input,
-            .proposal-field textarea {
-               padding: 12px 16px;
-               border: 1px solid #e2e8f0;
-               border-radius: 10px;
-               font-size: 0.95rem;
-               font-family: 'Outfit', sans-serif;
-               color: #0f172a;
-               background: #f8fafc;
-               outline: none;
-               transition: border-color 0.2s ease;
-            }
-            .proposal-field input:focus,
-            .proposal-field textarea:focus {
-               border-color: #6366f1;
-               background: #fff;
-            }
-            .proposal-field textarea {
-               height: 100px;
-               resize: none;
-            }
-            .proposal-submit {
-               display: inline-flex;
-               align-items: center;
-               justify-content: center;
-               gap: 10px;
-               background: linear-gradient(135deg, #6366f1, #ec4899);
-               color: #fff;
-               border: none;
-               padding: 14px;
-               border-radius: 10px;
-               font-size: 0.95rem;
-               font-weight: 600;
-               cursor: pointer;
-               transition: all 0.3s ease;
-               box-shadow: 0 6px 20px rgba(99,102,241,0.25);
-               margin-top: 5px;
-            }
-            .proposal-submit:hover {
-               box-shadow: 0 10px 30px rgba(99,102,241,0.35);
-               transform: translateY(-2px);
-            }
-            .proposal-submit:disabled {
-               opacity: 0.7;
-               cursor: not-allowed;
-               transform: none;
-            }
+            /* CRITICAL: FIX SCROLLING */
+            .v120-scroll-area { flex: 1; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; }
+            .v120-scroll-area::-webkit-scrollbar { display: none; }
+            .v120-inner { padding: 60px 40px; }
 
-            /* TABS */
-            .proj-tabs {
-               display: flex;
-               gap: 10px;
-               flex-wrap: wrap;
-            }
-            .proj-tab {
-               padding: 10px 22px;
-               border-radius: 50px;
-               border: 1px solid #e2e8f0;
-               background: #fff;
-               font-size: 0.85rem;
-               font-weight: 500;
-               color: #64748b;
-               cursor: pointer;
-               transition: all 0.25s ease;
-            }
-            .proj-tab:hover {
-               border-color: #6366f1;
-               color: #6366f1;
-            }
-            .proj-tab-active {
-               background: #0f172a;
-               border-color: #0f172a;
-               color: #fff !important;
-            }
+            .v120-badge { font-size: 0.7rem; font-weight: 900; color: ${c_purp}; letter-spacing: 3px; margin-bottom: 15px; }
+            .v120-title { font-size: 2.8rem; font-weight: 800; color: #0f172a; letter-spacing: -2px; line-height: 1.1; margin-bottom: 20px; }
+            .v120-tagline { font-size: 1.3rem; color: #64748b; font-weight: 300; line-height: 1.6; border-left: 4px solid ${c_purp}; padding-left: 20px; }
+            .v120-media-hero { width: 100%; height: 320px; border-radius: 24px; overflow: hidden; margin: 45px 0; position: relative; background: #f8fafc; }
+            .v120-media-hero img { width: 100%; height: 100%; object-fit: cover; }
+            .v120-v-tag { position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); color: #fff; font-size: 0.6rem; font-weight: 900; padding: 5px 12px; border-radius: 6px; }
 
-            /* GRID */
-            .proj-grid {
-               display: grid;
-               grid-template-columns: repeat(3, 1fr);
-               gap: 30px;
-               padding: 70px 0 120px 0;
-            }
-            .proj-card-featured {
-               grid-column: span 2;
-            }
-            .proj-card {
-               cursor: pointer;
-               border-radius: 16px;
-               overflow: hidden;
-               background: #fff;
-               border: 1px solid #f1f5f9;
-               box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-               display: flex;
-               flex-direction: column;
-               transition: box-shadow 0.35s ease, transform 0.35s ease;
-            }
-            .proj-card:hover {
-               box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-               transform: translateY(-5px);
-            }
-            .proj-card-img-wrap {
-               position: relative;
-               height: 280px;
-               overflow: hidden;
-            }
-            .proj-card-featured .proj-card-img-wrap {
-               height: 360px;
-            }
-            .proj-card-img {
-               width: 100%;
-               height: 100%;
-               object-fit: cover;
-               transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            .proj-card-img-overlay {
-               position: absolute;
-               inset: 0;
-               background: linear-gradient(to top, rgba(15,23,42,0.2), transparent);
-            }
-            .proj-cat-badge {
-               position: absolute;
-               top: 18px;
-               left: 18px;
-               background: rgba(255,255,255,0.92);
-               backdrop-filter: blur(8px);
-               border: 1px solid rgba(0,0,0,0.06);
-               color: #0f172a;
-               font-size: 0.72rem;
-               font-weight: 700;
-               letter-spacing: 1.5px;
-               padding: 6px 14px;
-               border-radius: 30px;
-            }
-            .proj-card-body {
-               padding: 30px;
-               display: flex;
-               flex-direction: column;
-               flex: 1;
-            }
-            .proj-card-meta {
-               font-size: 0.8rem;
-               font-weight: 500;
-               color: #94a3b8;
-               display: flex;
-               align-items: center;
-               gap: 10px;
-               margin-bottom: 12px;
-            }
-            .proj-dot {
-               width: 4px; height: 4px;
-               background: #cbd5e1;
-               border-radius: 50%;
-               display: inline-block;
-            }
-            .proj-card-title {
-               font-family: 'Playfair Display', serif;
-               font-size: 1.6rem;
-               font-weight: 700;
-               color: #0f172a;
-               margin-bottom: 12px;
-               line-height: 1.2;
-            }
-            .proj-card-desc {
-               font-size: 0.95rem;
-               line-height: 1.7;
-               color: #64748b;
-               flex: 1;
-               margin-bottom: 24px;
-               font-weight: 300;
-            }
-            .proj-card-footer {
-               display: flex;
-               justify-content: space-between;
-               align-items: center;
-               padding-top: 20px;
-               border-top: 1px solid #f1f5f9;
-            }
-            .proj-metrics {
-               display: flex;
-               gap: 8px;
-               flex-wrap: wrap;
-            }
-            .proj-metric {
-               font-size: 0.75rem;
-               font-weight: 600;
-               color: #475569;
-               background: #f8fafc;
-               border: 1px solid #e2e8f0;
-               padding: 4px 12px;
-               border-radius: 20px;
-            }
-            .proj-card-cta {
-               font-size: 0.8rem;
-               font-weight: 600;
-               color: #6366f1;
-               display: flex;
-               align-items: center;
-               gap: 6px;
-               white-space: nowrap;
-               transition: gap 0.2s ease;
-            }
-            .proj-card:hover .proj-card-cta { gap: 10px; }
+            .v120-section { margin-bottom: 70px; }
+            .v120-sec-lbl { font-size: 0.65rem; font-weight: 900; color: #cbd5e1; letter-spacing: 2px; margin-bottom: 30px; border-bottom: 2px solid #f8fafc; padding-bottom: 10px; }
+            .v120-spec-txt { font-size: 1.1rem; color: #475569; line-height: 1.8; margin-bottom: 40px; }
 
-            /* CASE STUDY */
-            .case-root { padding-top: 140px; }
-            .case-nav {
-               display: flex;
-               justify-content: space-between;
-               align-items: center;
-               margin-bottom: 60px;
-            }
-            .case-back-btn {
-               display: flex;
-               align-items: center;
-               gap: 10px;
-               background: none;
-               border: none;
-               font-size: 0.9rem;
-               font-weight: 600;
-               color: #0f172a;
-               cursor: pointer;
-               transition: gap 0.2s ease, color 0.2s ease;
-            }
-            .case-back-btn:hover { color: #6366f1; gap: 14px; }
-            .case-ref {
-               font-size: 0.75rem;
-               font-weight: 600;
-               color: #94a3b8;
-               letter-spacing: 2px;
-               text-transform: uppercase;
-            }
+            .v120-metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            .v120-metric-card { padding: 30px; border-radius: 24px; background: #fcfdfe; border: 1.5px solid #f1f5f9; }
+            .v120-m-val { display: block; font-size: 1.5rem; font-weight: 800; color: #0f172a; margin-bottom: 5px; }
+            .v120-m-lbl { font-size: 0.6rem; font-weight: 800; color: #94a3b8; letter-spacing: 1.5px; }
 
-            .case-header { margin-bottom: 60px; }
-            .case-category {
-               font-size: 0.8rem;
-               font-weight: 700;
-               letter-spacing: 2px;
-               color: #6366f1;
-               text-transform: uppercase;
-               margin-bottom: 20px;
-            }
-            .case-title {
-               font-family: 'Playfair Display', serif;
-               font-size: 4.5rem;
-               font-weight: 700;
-               color: #0f172a;
-               line-height: 1.05;
-               letter-spacing: -2px;
-               margin-bottom: 40px;
-            }
-            .case-meta {
-               display: flex;
-               gap: 60px;
-               padding: 30px 0;
-               border-top: 1px solid #f1f5f9;
-               border-bottom: 1px solid #f1f5f9;
-            }
-            .case-meta-label {
-               display: block;
-               font-size: 0.72rem;
-               font-weight: 700;
-               color: #94a3b8;
-               letter-spacing: 2px;
-               text-transform: uppercase;
-               margin-bottom: 8px;
-            }
-            .case-meta-value {
-               font-size: 1.05rem;
-               font-weight: 600;
-               color: #0f172a;
-            }
+            /* 📊 DELIVERABLES LIST */
+            .v120-deliverables-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+            .v120-del-item { display: flex; align-items: center; gap: 14px; font-size: 0.95rem; color: #334155; font-weight: 500; }
+            .v120-del-dot { color: ${c_purp}; font-size: 0.8rem; flex-shrink: 0; }
 
-            .case-hero-img {
-               border-radius: 16px;
-               overflow: hidden;
-               height: 520px;
-               margin: 60px 0;
-            }
-            .case-hero-img img {
-               width: 100%;
-               height: 100%;
-               object-fit: cover;
-            }
+            /* 📊 PRICING TIERS V121 */
+            .v121-plans-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+            .v121-plan-card { padding: 28px 30px; background: #fff; border: 1.5px solid #f1f5f9; border-radius: 24px; position: relative; overflow: hidden; transition: 0.3s; }
+            .v121-plan-card.popular { border-color: ${c_purp}; background: linear-gradient(135deg, #faf5ff 0%, #fff0f9 100%); box-shadow: 0 20px 60px rgba(168,85,247,0.12); }
+            .v121-popular-tag { font-size: 0.6rem; font-weight: 900; color: #fff; background: ${c_mix}; letter-spacing: 2px; padding: 4px 14px; border-radius: 50px; display: inline-block; margin-bottom: 14px; }
+            .v121-p-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; gap: 10px; }
+            .v121-p-name { font-size: 1.15rem; font-weight: 800; color: #0f172a; }
+            .v121-p-price { font-family: 'JetBrains Mono', monospace; font-weight: 800; color: ${c_purp}; font-size: 1.15rem; white-space: nowrap; }
+            .v121-p-desc { font-size: 0.9rem; color: #64748b; line-height: 1.55; margin-bottom: 20px; position: relative; z-index: 2; }
+            .v121-features-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; border-top: 1px solid #f1f5f9; padding-top: 18px; position: relative; z-index: 2; }
+            .v121-feat-item { display: flex; align-items: center; gap: 10px; font-size: 0.875rem; color: #475569; font-weight: 500; }
+            .v121-feat-check { color: #22c55e; font-weight: 900; font-size: 0.8rem; flex-shrink: 0; }
+            .v121-p-neon { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: ${c_mix}; border-radius: 20px 0 0 20px; }
 
-            .case-body-grid {
-               display: grid;
-               grid-template-columns: 1fr 320px;
-               gap: 80px;
-               margin-bottom: 100px;
-            }
-            .case-section { margin-bottom: 55px; }
-            .case-section-label {
-               font-size: 0.75rem;
-               font-weight: 700;
-               letter-spacing: 2px;
-               text-transform: uppercase;
-               color: #6366f1;
-               margin-bottom: 20px;
-               padding-left: 16px;
-               border-left: 3px solid #6366f1;
-            }
-            .case-section-text {
-               font-size: 1.2rem;
-               line-height: 1.9;
-               color: #475569;
-               font-weight: 300;
-            }
+            .v120-stack-wrap { display: flex; flex-wrap: wrap; gap: 12px; }
+            .v120-stack-pill { padding: 10px 22px; border-radius: 12px; border: 1.5px solid #f1f5f9; font-size: 0.85rem; font-weight: 800; color: #64748b; }
+            .v120-cta-final { width: 100%; padding: 25px; background: #000; color: #fff; border-radius: 24px; font-weight: 900; font-size: 1.1rem; cursor: pointer; transition: 0.4s; }
+            .v120-cta-final:hover { background: ${c_mix}; transform: translateY(-5px); box-shadow: 0 30px 60px rgba(168,85,247,0.25); }
 
-            .case-aside-box {
-               background: #f8fafc;
-               border: 1px solid #e2e8f0;
-               border-radius: 12px;
-               padding: 30px;
-               margin-bottom: 25px;
-            }
-            .case-aside-title {
-               font-size: 0.75rem;
-               font-weight: 700;
-               letter-spacing: 2px;
-               text-transform: uppercase;
-               color: #94a3b8;
-               margin-bottom: 20px;
-            }
-            .case-pills { display: flex; flex-wrap: wrap; gap: 8px; }
-            .case-pill {
-               background: #fff;
-               border: 1px solid #e2e8f0;
-               padding: 7px 14px;
-               border-radius: 8px;
-               font-size: 0.85rem;
-               font-weight: 500;
-               color: #0f172a;
-            }
-            .case-results { list-style: none; padding: 0; margin: 0; }
-            .case-results li {
-               display: flex;
-               align-items: center;
-               gap: 12px;
-               font-size: 1rem;
-               font-weight: 600;
-               color: #0f172a;
-               padding: 12px 0;
-               border-bottom: 1px solid #f1f5f9;
-            }
-            .case-result-dot {
-               width: 8px; height: 8px; border-radius: 50%;
-               background: #6366f1; flex-shrink: 0;
-            }
-
-            .case-cta-strip {
-               display: flex;
-               justify-content: space-between;
-               align-items: center;
-               background: #0f172a;
-               border-radius: 20px;
-               padding: 60px 70px;
-               margin-bottom: 120px;
-               color: #fff;
-            }
-            .case-cta-title {
-               font-family: 'Playfair Display', serif;
-               font-size: 2rem;
-               font-weight: 700;
-               margin-bottom: 10px;
-            }
-            .case-cta-desc {
-               font-size: 1rem;
-               color: #94a3b8;
-               font-weight: 300;
-            }
-            .case-cta-btn {
-               display: flex;
-               align-items: center;
-               gap: 12px;
-               background: linear-gradient(135deg, #6366f1, #ec4899);
-               color: #fff;
-               border: none;
-               padding: 16px 36px;
-               border-radius: 50px;
-               font-size: 0.95rem;
-               font-weight: 600;
-               cursor: pointer;
-               white-space: nowrap;
-               transition: all 0.3s ease;
-               box-shadow: 0 10px 30px rgba(99,102,241,0.3);
-            }
-            .case-cta-btn:hover {
-               transform: translateY(-3px);
-               box-shadow: 0 15px 40px rgba(99,102,241,0.4);
-            }
-
-            /* Responsive */
-            @media (max-width: 1024px) {
-               .proj-hero-split { flex-direction: column; }
-               .proj-hero-right { justify-content: flex-start; width: 100%; }
-               .proposal-card { max-width: 100%; }
-               .proj-grid { grid-template-columns: 1fr 1fr; }
-               .proj-card-featured { grid-column: span 2; }
-               .proj-hero-title { font-size: 4rem; }
-               .case-title { font-size: 3rem; }
-               .case-body-grid { grid-template-columns: 1fr; }
-               .case-cta-strip { flex-direction: column; gap: 40px; text-align: center; }
+            @media (max-width: 1100px) {
+               .v120-drawer { width: 90vw; }
+               .v118-grid { grid-template-columns: 1fr 1fr; }
+               .v104-hero-flex { gap: 40px; }
             }
             @media (max-width: 768px) {
-               .proj-grid { grid-template-columns: 1fr; }
-               .proj-card-featured { grid-column: span 1; }
-               .case-meta { flex-direction: column; gap: 25px; }
+               .v104-hero { padding: 100px 0 60px 0; }
+               .v104-hero-flex { flex-direction: column; gap: 60px; text-align: center; }
+               .v104-hero-info { flex: 1; text-align: center; }
+               .v104-eyebrow { justify-content: center; }
+               .v104-h1 { font-size: 2.8rem; letter-spacing: -1.5px; }
+               .v104-desc { margin: 0 auto 35px auto; }
+               .v104-filters { justify-content: center; }
+               .v104-portal { flex: 1; min-width: 100%; }
+               .v104-cta-card { padding: 30px; }
+               .proj-container { padding: 0 20px; }
+               .v118-grid-sec { padding: 60px 0 100px; }
+               .v118-card { border-radius: 28px; }
+               .v118-grid { grid-template-columns: 1fr; }
+               
+               /* 🏆 MODAL MOBILE REFINEMENT */
+               .v120-drawer { width: 100vw; min-width: 100vw; }
+               .v120-title { font-size: 2.2rem; letter-spacing: -1px; }
+               .v120-tagline { font-size: 1.1rem; padding-left: 15px; }
+               .v120-inner { padding: 40px 24px; }
+               .v120-media-hero { height: 220px; margin: 30px 0; }
+               .v120-metrics-grid { grid-template-columns: 1fr; }
+               .v120-spec-txt { font-size: 1rem; line-height: 1.7; }
+               .v121-p-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+               .v121-p-price { font-size: 1.4rem; }
+               .v120-head { padding: 20px; }
             }
          `}</style>
       </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Navbar from './Navbar';
+
 
 const AssistantPage = () => {
    const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('devnexes_auth') === 'true');
@@ -100,7 +100,7 @@ const AssistantPage = () => {
    if (!isLoggedIn) {
       return (
          <div className="gpt-auth-root">
-            <Navbar />
+
             <div className="gpt-auth-card animate-enter">
                <h2 className="v10-h2">{authStep === 'email' ? 'Welcome back' : 'Check your email'}</h2>
                <p className="v10-p">{authStep === 'email' ? 'Enter your email to access your Devnexes AI station.' : `We've sent a code to ${tempEmail}`}</p>

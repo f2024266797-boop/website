@@ -10,7 +10,7 @@ data = {
 }
 
 try:
-    response = requests.post('http://localhost:5005/api/send-proposal', json=data)
+    response = requests.post('http://localhost:5006/api/send-proposal', json=data)
     print(f"Status: {response.status_code}")
     print(f"Response: {response.json()}")
 except Exception as e:
